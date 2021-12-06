@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-#SBATCH --partition=kingspeak-guest
-#SBATCH --account=owner-guest
+#SBATCH --partition=kingspeak
+#SBATCH --account=u6010444
 
 #SBATCH --job-name=test
 #SBATCH --output=res.txt
