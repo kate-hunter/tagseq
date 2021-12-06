@@ -1,4 +1,4 @@
-# mel_tagseq
+# Nmel_tag_seq
 
 # created 12.6.21
 # Last edited: 12.6.21
