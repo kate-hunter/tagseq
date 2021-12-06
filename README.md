@@ -7,3 +7,8 @@ Included in this folder
 
 -Practicing folder for working in SLURM job submissions
 
+Scripts:
+
+-ngs_concat.pl 
+
+taken from: https://github.com/z0on/tag-based_RNAseq/blob/master/ngs_concat.pl
