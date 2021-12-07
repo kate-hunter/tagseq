@@ -3,10 +3,10 @@
 $usage= "
 concatenates files by matching pattern in their names
 arg1: common pattern for files
-arg2: perl-like pattern in the filename to recognize, 
+arg2: perl-like pattern in the filename to recognize,
 	  use brackets to specify the unique part, as in
 	\"FilenameTextImmediatelyBeforeSampleID(.+)FilenameTextImmediatelyAfterSampleID\"
-Example (to concatenate files names like Sample_Pop1_L1.fastq, Sample_Pop1_L2.fastq): 
+Example (to concatenate files names like Sample_Pop1_L1.fastq, Sample_Pop1_L2.fastq):
 ngs_concat.pl 'Sample' 'Sample_(.+)_L'
 ";
 
@@ -20,7 +20,7 @@ my @ids=();
 foreach $file (@files){
 	if ($file=~/$patt/) {
 		$ii=$1;
-#		unless (grep {$_ eq $ii} @ids){ 
+#		unless (grep {$_ eq $ii} @ids){
 #			my $name=$file;
 #			my $ccat=$patt;
 #			$ccat=~s/\(.+\)/$ii/;
