@@ -1,0 +1,2 @@
+SyntaxError in line 34 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile_prac:
+Unexpected keyword ouput in rule definition (snakefile_prac, line 34)

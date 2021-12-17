@@ -7,33 +7,44 @@ project_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/
 snake_scripts_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/"
 #####End INPUT###
 
-ids, =glob_wildcards(project_path+"{id}_R1_001.fastq.gz")
-
-# Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
-# in the list ids. This rule will run create_foo_file for
-# each of those .fastq.gz files:
+(ids, lanes) =glob_wildcards(project_path+"{id}_L00{lane}_R1_001.fastq.gz")
 
 rule all:
-       input: expand(project_path+"{sample}_R1_001.fastq", sample=ids)
-              expand(project_path+"{sample}.fq", sample=ids)
+       input: expand(project_path+"{sample}_L00{lane}_R1_001.fastq", sample=ids, lane=lanes),
+              expand(project_path+"{sample}_merged.fastq", sample=ids)
+
+# Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
+# in the list ids. This rule will run unzip_files for
+# each of those .fastq.gz files:
 
 rule unzip_files:
-       input: project_path+"{sample}_R1_001.fastq.gz"
-			 output: project_path+"{sample}_R1_001.fastq"
+       input: project_path+"{sample}_L00{lane}_R1_001.fastq.gz"
+			 output: project_path+"{sample}_L00{lane}_R1_001.fastq"
 			 params: cpu=1
 			 resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
 			 shell:"""
 			       zcat {input} > {output}
 						 """
 
-#below rule is meant to run the ngs_concat.pl script
+#concatenating files here
 
-rule concatenate_files:
-       input: project_path+"{sample}_R1_001.fastq"
-       output: project_path+"{sample}.fq"
-       params: cpu=1
-               map=snake_scripts_path
-       resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-       shell:"""
-             perl {params.map} '10_S102_L001_R1_001.fastq' '(.+)_S102_L001_R1_001.fastq'
-             """
+rule concatenate_files_cat:
+        input:
+              l1=project_path+"{sample}_L001_R1_001.fastq",
+              l2=project_path+"{sample}_L002_R1_001.fastq"
+        output: project_path+"{sample}_merged.fastq"
+        shell:"""
+ 			       cat {input.l1} {input.l2}> {output}
+ 						 """
+
+#unused rules
+#rule concatenate_files:
+#       input: project_path+"{sample}_L00{lane}_R1_001.fastq"
+#       output: project_path+"{sample}_{lane}.fq"
+#       params: cpu=1,
+#               map=project_path
+#       resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+#       shell:"""
+#             cd {params.map}
+#             perl ngs_concat.pl 'Samp' 'Samp_(.+)_L
+#             """

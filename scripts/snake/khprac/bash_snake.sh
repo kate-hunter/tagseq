@@ -13,6 +13,8 @@
 #{cluster.cluster}=clusterprefix.cluster
 
 module load snakemake/5.6.0
-	snakemake -s snakefile_prac --cluster-config cluster.yaml --jobs 2 \
+	snakemake -s snakefile_prac --cluster-config cluster.yaml --jobs 8 \
 	--cluster "sbatch --ntasks=1 --time 1:00:00 --mem={resources.mem_mb} --cpus-per-task={params.cpu} -M {cluster.cluster} -A {cluster.account} -p {cluster.partition}" \
 	--latency-wait 10
+
+#To run bash script, type in sbatch bash_snake.sh
