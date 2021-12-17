@@ -1,0 +1,39 @@
+#From https://wiki.chpc.utah.edu/display/~u0424091/Snakemake
+#dry run: snakemake -n -s snakefile_prac
+
+
+###USER INPUT####
+project_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/"
+snake_scripts_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/"
+#####End INPUT###
+
+ids, =glob_wildcards(project_path+"{id}_R1_001.fastq.gz")
+
+# Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
+# in the list ids. This rule will run create_foo_file for
+# each of those .fastq.gz files:
+
+rule all:
+       input: expand(project_path+"{sample}_R1_001.fastq", sample=ids)
+              expand(project_path+"{sample}.fq", sample=ids)
+
+rule unzip_files:
+       input: project_path+"{sample}_R1_001.fastq.gz"
+			 output: project_path+"{sample}_R1_001.fastq"
+			 params: cpu=1
+			 resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+			 shell:"""
+			       zcat {input} > {output}
+						 """
+
+#below rule is meant to run the ngs_concat.pl script
+
+rule concatenate_files:
+       input: project_path+"{sample}_R1_001.fastq"
+       output: project_path+"{sample}.fq"
+       params: cpu=1
+               map=snake_scripts_path
+       resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+       shell:"""
+             perl {params.map} '10_S102_L001_R1_001.fastq' '(.+)_S102_L001_R1_001.fastq'
+             """
