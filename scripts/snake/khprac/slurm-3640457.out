@@ -1,0 +1,48 @@
+
+The following have been reloaded with a version change:
+  1) python/3.7.3 => python/3.6.3     2) snakemake/6.4.1 => snakemake/5.6.0
+
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 2
+Job counts:
+	count	jobs
+	1	all
+	2	create_one_dot_foo_file
+	3
+
+[Fri Dec 10 15:01:26 2021]
+rule create_one_dot_foo_file:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq
+    jobid: 1
+    wildcards: sample=10_S102_L001
+    resources: mem_mb=1000
+
+Submitted job 1 with external jobid 'Submitted batch job 3640461 on cluster notchpeak'.
+
+[Fri Dec 10 15:01:27 2021]
+rule create_one_dot_foo_file:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L002_R1_001.fastq
+    jobid: 2
+    wildcards: sample=10_S102_L002
+    resources: mem_mb=1000
+
+Submitted job 2 with external jobid 'Submitted batch job 3640463 on cluster notchpeak'.
+[Fri Dec 10 15:01:46 2021]
+Finished job 1.
+1 of 3 steps (33%) done
+[Fri Dec 10 15:01:46 2021]
+Finished job 2.
+2 of 3 steps (67%) done
+
+[Fri Dec 10 15:01:46 2021]
+localrule all:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L002_R1_001.fastq
+    jobid: 0
+
+[Fri Dec 10 15:01:46 2021]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2021-12-10T150126.610638.snakemake.log

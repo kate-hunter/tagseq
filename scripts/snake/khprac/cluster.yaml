@@ -1,0 +1,6 @@
+__default__:
+    cluster: notchpeak
+    partition: kapheim-shared-np
+    account: kapheim-np
+
+    #Questions-why notchpeak?
