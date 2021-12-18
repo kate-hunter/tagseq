@@ -2,3 +2,4 @@
 fastq_practice/
 slurm*
 *.out
+.snakemake/
