@@ -1,0 +1,56 @@
+#From https://wiki.chpc.utah.edu/display/~u0424091/Snakemake
+#dry run: snakemake -n -s snakefile_prac
+
+#rule stock:
+#    input:
+#    output:
+#    resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
+#    params:cpu=1
+#    shell:"""
+#
+
+
+###USER INPUT####
+project_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/"
+snake_scripts_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/"
+#####End INPUT###
+
+(ids, lanes) =glob_wildcards(project_path+"{id}_L00{lane}_R1_001.fastq.gz")
+
+rule all:
+       input: expand(project_path+"unzipped/"+"{sample}_L00{lane}_R1_001.fastq", sample=ids, lane=lanes),
+              expand(project_path+"concatenated/"+"{sample}.fastq", sample=ids)
+
+# Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
+# in the list ids. This rule will run unzip_files for
+# each of those .fastq.gz files:
+
+rule unzip_files:
+       input: project_path+"original_files/"+"{sample}_L00{lane}_R1_001.fastq.gz"
+			 output: project_path+"unzipped/"+"{sample}_L00{lane}_R1_001.fastq"
+			 params: cpu=1
+			 resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+			 shell:"""
+			       zcat {input} > {output}
+						 """
+
+#concatenating files here, make sure to check using wc -l that the concatenated files are the same line count a
+#as the individual files
+
+rule concatenate_files_cat:
+        input:
+              l1=project_path+"unzipped/"+"{sample}_L001_R1_001.fastq",
+              l2=project_path+"unzipped/"+"{sample}_L002_R1_001.fastq"
+        output: project_path+"concatenated/"+"{sample}.fastq"
+        params: cpu=1
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        shell:"""
+ 			        cat {input.l1} {input.l2}> {output}
+ 						  """
+
+rule stock:
+        input:
+        output:
+        resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params:cpu=1
+        shell:"""
