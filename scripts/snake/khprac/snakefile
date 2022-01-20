@@ -1,5 +1,5 @@
 #From https://wiki.chpc.utah.edu/display/~u0424091/Snakemake
-#dry run: snakemake -n -s snakefile_prac
+#dry run: snakemake -n -s snakefile
 
 #rule stock:
 #    input:
@@ -13,26 +13,31 @@
 ###USER INPUT####
 project_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/"
 snake_scripts_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/"
+perl_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/"
 #####End INPUT###
 
 (ids, lanes) =glob_wildcards(project_path+"{id}_L00{lane}_R1_001.fastq.gz")
 
 rule all:
-       input: expand(project_path+"unzipped/"+"{sample}_L00{lane}_R1_001.fastq", sample=ids, lane=lanes),
-              expand(project_path+"concatenated/"+"{sample}.fastq", sample=ids)
-
+        input:expand(project_path+"unzipped/"+"{sample}_L00{lane}_R1_001.fastq", sample=ids, lane=lanes),
+              expand(project_path+"concatenated/"+"{sample}.fastq", sample=ids),
+              expand(project_path+"clipped_tags/"+"{sample}_clip.fastq", sample=ids)
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for
 # each of those .fastq.gz files:
 
 rule unzip_files:
-       input: project_path+"original_files/"+"{sample}_L00{lane}_R1_001.fastq.gz"
-			 output: project_path+"unzipped/"+"{sample}_L00{lane}_R1_001.fastq"
-			 params: cpu=1
-			 resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-			 shell:"""
-			       zcat {input} > {output}
-						 """
+        input: project_path+"original_files/"+"{sample}_L00{lane}_R1_001.fastq.gz"
+        output: project_path+"unzipped/"+"{sample}_L00{lane}_R1_001.fastq"
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params: cpu=1,
+                id="{sample}",
+                lane="{lane}",
+                input_path=project_path+"original_files/"
+        shell:"""
+              cd {params.input_path}
+              zcat {input} > {output}
+              """
 
 #concatenating files here, make sure to check using wc -l that the concatenated files are the same line count a
 #as the individual files
@@ -45,12 +50,29 @@ rule concatenate_files_cat:
         params: cpu=1
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         shell:"""
- 			        cat {input.l1} {input.l2}> {output}
- 						  """
+ 			  cat {input.l1} {input.l2}> {output}
+ 			  """
 
-rule stock:
-        input:
-        output:
-        resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params:cpu=1
+#clips 5' leader and removes duplicated sequences from reads based on whether
+#there is an N in the first 20 bases of the sequence
+
+rule clip_5pldr_dups:
+        input: project_path+"concatenated/"+"{sample}.fastq"
+        output: project_path+"clipped_tags/"+"{sample}_clip.fastq"
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params:cpu=1,
+               map=perl_path+"tagseq_clipper.pl",
+               seqs=project_path+"concatenated/"+"{sample}.fastq"
         shell:"""
+              perl {params.map} {params.seqs} > {output}
+ 			  """
+
+
+
+
+#rule stock:
+#        input:
+#        output:
+#        resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
+#        params:cpu=1
+#        shell:"""
