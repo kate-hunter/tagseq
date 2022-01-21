@@ -9,19 +9,20 @@
 #    shell:"""
 #
 
-
 ###USER INPUT####
 project_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/"
 snake_scripts_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/"
 perl_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/"
 #####End INPUT###
 
-(ids, lanes) =glob_wildcards(project_path+"{id}_L00{lane}_R1_001.fastq.gz")
+(ids, lanes)=glob_wildcards(project_path+"original_files/"+"{id}_L00{lane}_R1_001.fastq.gz")
 
 rule all:
         input:expand(project_path+"unzipped/"+"{sample}_L00{lane}_R1_001.fastq", sample=ids, lane=lanes),
               expand(project_path+"concatenated/"+"{sample}.fastq", sample=ids),
-              expand(project_path+"clipped_tags/"+"{sample}_clip.fastq", sample=ids)
+              expand(project_path+"clipped_tags/"+"{sample}_clip.fastq", sample=ids),
+              expand(project_path+"clipped_tags/summaries/"+"{sample}.fastq.summary.txt", sample=ids),
+              expand(project_path+"clipped_tags/summaries/summaries.txt")
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for
 # each of those .fastq.gz files:
@@ -46,7 +47,7 @@ rule concatenate_files_cat:
         input:
               l1=project_path+"unzipped/"+"{sample}_L001_R1_001.fastq",
               l2=project_path+"unzipped/"+"{sample}_L002_R1_001.fastq"
-        output: project_path+"concatenated/"+"{sample}.fastq"
+        output: project_path+"clipped_tags/"+"{sample}.fastq"
         params: cpu=1
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         shell:"""
@@ -58,15 +59,54 @@ rule concatenate_files_cat:
 
 rule clip_5pldr_dups:
         input: project_path+"concatenated/"+"{sample}.fastq"
-        output: project_path+"clipped_tags/"+"{sample}_clip.fastq"
+        output:
+               clips=project_path+"clipped_tags/"+"{sample}_clip.fastq",
+               summaries=project_path+"concatenated/"+"{sample}.fastq.summary.txt"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params:cpu=1,
                map=perl_path+"tagseq_clipper.pl",
                seqs=project_path+"concatenated/"+"{sample}.fastq"
         shell:"""
-              perl {params.map} {params.seqs} > {output}
- 			  """
+              module load perl
+              perl {params.map} {params.seqs} > {output.clips}
+			  """
 
+rule move_summaries:
+        input: project_path+"concatenated/"+"{sample}.fastq.summary.txt"
+        output: project_path+"clipped_tags/summaries/"+"{sample}.fastq.summary.txt"
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params:cpu=1,
+               summaries=project_path+"clipped_tags/summaries/"
+        shell:"""
+              cp {input} {params.summaries}
+			  """
+
+rule cat_summary:
+        input: expand(project_path+"clipped_tags/summaries/"+"{sample}.fastq.summary.txt", sample=ids)
+        output: project_path+"clipped_tags/summaries/summaries.txt"
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params:cpu=1,
+        shell:"""
+              cat {input} | sort -u > {output}
+              """
+              #will have to come back later to look at how to delete beginning of string
+
+#Need a rule here to run through tagseq_clipper then fastx_clippers from tagseq_trim_launch
+#rule trim_seq_fil:
+#        input: project_path+"concatenated/"+"{sample}.fastq"
+#        output: project_path+"clipped_tags/"+"{sample}_clip.fastq"
+#        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+#        params:cpu=1,
+#               map=perl_path+"tagseq_clipper.pl",
+#               seqs=project_path+"concatenated/"+"{sample}.fastq"
+#        shell:"""
+#              module load perl
+#              module load fastx_toolkit
+#              perl {params.map} {params.seqs} |,
+#              fastx_clipper -a AAAAAAAA -l 20 -Q33 |,
+#              fastx_clipper -a AGATCGGAAG -l 20 -Q33 |,
+#              fastq_quality_filter -Q33 -q 20 -p 90 > {output}
+#			  """
 
 
 
