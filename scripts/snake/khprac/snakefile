@@ -57,20 +57,41 @@ rule concatenate_files_cat:
 #clips 5' leader and removes duplicated sequences from reads based on whether
 #there is an N in the first 20 bases of the sequence
 
-rule clip_5pldr_dups:
+
+#Need a rule here to run through tagseq_clipper then fastx_clippers from tagseq_trim_launch
+rule trim_seq_fil:
         input: project_path+"concatenated/"+"{sample}.fastq"
-        output:
-               clips=project_path+"clipped_tags/"+"{sample}_clip.fastq",
-               summaries=project_path+"concatenated/"+"{sample}.fastq.summary.txt"
+        output: project_path+"clipped_tags/"+"{sample}_clip.fastq"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params:cpu=1,
                map=perl_path+"tagseq_clipper.pl",
                seqs=project_path+"concatenated/"+"{sample}.fastq"
         shell:"""
               module load perl
-              perl {params.map} {params.seqs} > {output.clips}
+              module load fastx_toolkit
+              perl {params.map} {params.seqs} |\
+              fastx_clipper -a AAAAAAAA -l 20 -Q33 |\
+              fastx_clipper -a AGATCGGAAG -l 20 -Q33 |\
+              fastq_quality_filter -Q33 -q 20 -p 90 > {output}
 			  """
 
+#Below rule is to use specifically the tagseq_clipper tool. above rule for trim_seq_fill is the
+#correct rule to run the clipper and quality filter
+#rule clip_5pldr_dups:
+#        input: project_path+"concatenated/"+"{sample}.fastq"
+#        output:
+#               clips=project_path+"clipped_tags/"+"{sample}_clip.fastq",
+#               summaries=project_path+"concatenated/"+"{sample}.fastq.summary.txt"
+#        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+#        params:cpu=1,
+#               map=perl_path+"tagseq_clipper.pl",
+#               seqs=project_path+"concatenated/"+"{sample}.fastq"
+#        shell:"""
+#              module load perl
+#              perl {params.map} {params.seqs} > {output.clips}
+#			  """
+
+#Below rule is to copy the summaries of the tagseq_clipper tool into a different folder
 rule move_summaries:
         input: project_path+"concatenated/"+"{sample}.fastq.summary.txt"
         output: project_path+"clipped_tags/summaries/"+"{sample}.fastq.summary.txt"
@@ -81,6 +102,7 @@ rule move_summaries:
               cp {input} {params.summaries}
 			  """
 
+#Below rule is to concatenate the various summary files into one
 rule cat_summary:
         input: expand(project_path+"clipped_tags/summaries/"+"{sample}.fastq.summary.txt", sample=ids)
         output: project_path+"clipped_tags/summaries/summaries.txt"
@@ -90,6 +112,8 @@ rule cat_summary:
               cat {input} | sort -u > {output}
               """
               #will have to come back later to look at how to delete beginning of string
+
+
 
 #Need a rule here to run through tagseq_clipper then fastx_clippers from tagseq_trim_launch
 #rule trim_seq_fil:

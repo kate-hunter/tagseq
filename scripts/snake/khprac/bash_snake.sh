@@ -4,7 +4,7 @@
 #SBATCH --mem=1GB
 #SBATCH --ntasks 1
 #SBATCH --mail-type=FAIL
-#SBATCH --mail-user=franceskhunter@gmail.com
+#SBATCH --mail-user=
 
 #bash script for executing snakemake in cluster
 #important note yaml files need to have exactly four spaces to constitute an indent
