@@ -1,0 +1,113 @@
+# For public TagSeq trimming code in /mnt/bioi/tools/tagseq_data_prep/
+# Version: 2022-01-06
+
+# --------------------------------
+# Basic configuration overrides
+# --------------------------------
+
+# Titles to use for the report.
+title: "TAGseq Fastq read processing for __JAxxxxx"
+subtitle: null
+intro_text: "MultiQC report for TAGseq Fastq read processing for GSAF Job __JAxxxxx in run __SAxxxxx."
+report_header_info:
+    - Brought to you by: 'UT Austin Bioinformatics Consulting Group (BCG)'
+    - Sequenced by: 'UT Austin Genome Sequencing and Analysis Facility (GSAF)'
+    - Job: '__JAxxxxx'
+    - Run: '__SAxxxxx'
+    - TAGseq code version: 'https://github.com/z0on/tag-based_RNAseq 2019_08_01 with BCG modifications'
+    - TAGseq tags used: 'swMWWM, swGC, swTG, swMW'
+    - Reads with no tag: 'Discarded'
+    - Deduplication: 'UMI tag plus __DEDUP_SUBSTR_LEN bases'
+    - PolyA sequences: 'AAAAAAAA+ removed'
+    - Adapter sequence: 'AGATCGGAAG removed'
+    - After trimming: 'Reads shorter than __MIN_TRIMMED_LEN bases removed'
+    - Quality check: Discard if > 10% remaining bases have mapping quality < __MIN_MAPQ
+
+# Number formatting
+decimalPoint_format: '.'
+thousandsSep_format: ','
+
+# Modules that should come at the top of the report
+top_modules:
+    - 'generalstats'
+
+# This strips extra stuff off Fastq file names
+extra_fn_clean_exts:
+    - type: 'regex'
+      pattern: '[.]fastq[.]gz'
+    - type: 'remove'
+      pattern: '.dupcategories.tsv'
+    - type: 'remove'
+      pattern: '.duphist.tsv'
+
+# ------------------------------------------------
+# Custom data
+# ------------------------------------------------
+# Note: Requires MultiQC 1.6+
+# Custom_data section format changed; no id tag
+# ------------------------------------------------
+
+custom_content:
+  order:
+    - tagseq_sample_summary_section
+    - tagseq_summary_stats_section
+    - tagseq_duphist_section
+    - tagseq_dupcategories_section
+
+sp:
+    tagseq_sample_summary_section:
+        fn: 'all.sample_results.tsv'
+    tagseq_summary_stats_section:
+        fn: 'all.tagseq_summary_stats.tsv'
+    tagseq_duphist_section:
+        fn: '*.duphist.tsv'
+    tagseq_dupcategories_section:
+        fn: '*.dupcategories.tsv'
+
+custom_data:
+    tagseq_sample_summary_section:
+        parent_id: tagseq_processing
+        parent_name: 'TAGseq Fastq read processing'
+        parent_description: 'These analyses show metrics from sequence de-duplication and header trimming of TAGseq datasets.'
+        section_name: 'TAGseq by-sample summary'
+        description: 'statistics from sequence de-duplicating and header trimming.'
+        file_format: 'tsv'
+        plot_type: 'table'
+        pconfig:
+            id: 'tagseq_sample_summary_plot'
+            title: 'By-Sample Trimming Stats'
+    tagseq_summary_stats_section:
+        parent_id: tagseq_processing
+        section_name: 'TAGseq by-file processing'
+        description: 'statistics from sequence de-duplicating and header trimming. Reads in categories other than Final were discarded.'
+        file_format: 'tsv'
+        plot_type: 'bargraph'
+        pconfig:
+            id: 'tagseq_summary_plot'
+            title: 'Processed TAGseq reads by Category'
+    tagseq_duphist_section:
+        parent_id: tagseq_processing
+        section_name: 'UMI duplicaton'
+        description: 'analysis. Pre-deduplicaton sequence counts are displayed as a function of the number Unique Molecular Indexes (UMIs) observed.'
+        file_format: 'tsv'
+        plot_type: 'linegraph'
+        pconfig:
+            id: 'tagseq_duphist_plot'
+            title: 'Pre-deduplicaton sequence counts by UMI'
+            xlab: 'Number of UMIs observed'
+            xLog: True
+            yLog: True
+            ylab: 'Pre-deduplicaton sequence count'
+    tagseq_dupcategories_section:
+        parent_id: tagseq_processing
+        section_name: 'UMI category duplication'
+        description: 'analysis. Pre-deduplicaton sequence counts are displayed by number of Unique Molecular Indexes (UMIs) observed category.'
+        file_format: 'tsv'
+        plot_type: 'bargraph'
+        pconfig:
+            id: 'tagseq_dupcategories_plot'
+            title: 'Pre-deduplicaton sequence counts by UMI category'
+            logswitch: True
+            logswitch_active: False
+
+

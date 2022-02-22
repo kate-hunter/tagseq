@@ -10,133 +10,78 @@
 #
 
 ###USER INPUT####
-project_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/"
-snake_scripts_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/"
-perl_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/"
+project_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/"
+reads_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/"
+#snake_scripts_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/"
+#perl_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/"
+genome="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/"
+fasta_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_genome_v2.1.0.fasta"
+gff_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_OGS_v2.1.0.gff3"
 #####End INPUT###
 
-(ids, lanes)=glob_wildcards(project_path+"original_files/"+"{id}_L00{lane}_R1_001.fastq.gz")
+
+ids, =glob_wildcards(reads_path+"{id}_L099_R1_cmb.trim.fastq.gz")
 
 rule all:
-        input:expand(project_path+"unzipped/"+"{sample}_L00{lane}_R1_001.fastq", sample=ids, lane=lanes),
-              expand(project_path+"concatenated/"+"{sample}.fastq", sample=ids),
-              expand(project_path+"clipped_tags/"+"{sample}_clip.fastq", sample=ids),
-              expand(project_path+"clipped_tags/summaries/"+"{sample}.fastq.summary.txt", sample=ids),
-              expand(project_path+"clipped_tags/summaries/summaries.txt")
+        input:expand(reads_path+"{sample}_L099_R1_cmb.trim.fastq.gz", sample=ids),
+              expand(reads_path+"unzipped/"+"{sample}.trim.fastq", sample=ids),
+              genome+"index_done.txt",
+              expand(reads_path+"BAM/{sample}/"+"Log.final.out", sample=ids)
+
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for
 # each of those .fastq.gz files:
 
 rule unzip_files:
-        input: project_path+"original_files/"+"{sample}_L00{lane}_R1_001.fastq.gz"
-        output: project_path+"unzipped/"+"{sample}_L00{lane}_R1_001.fastq"
+        input: reads_path+"{sample}_L099_R1_cmb.trim.fastq.gz"
+        output: reads_path+"unzipped/"+"{sample}.trim.fastq"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params: cpu=1,
                 id="{sample}",
-                lane="{lane}",
-                input_path=project_path+"original_files/"
+                input_path=reads_path
         shell:"""
               cd {params.input_path}
               zcat {input} > {output}
               """
 
-#concatenating files here, make sure to check using wc -l that the concatenated files are the same line count a
-#as the individual files
-
-rule concatenate_files_cat:
-        input:
-              l1=project_path+"unzipped/"+"{sample}_L001_R1_001.fastq",
-              l2=project_path+"unzipped/"+"{sample}_L002_R1_001.fastq"
-        output: project_path+"clipped_tags/"+"{sample}.fastq"
-        params: cpu=1
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+# The sjdbOverhang is 99 here because some seem to just stick with the defaults
+# the attempt change to 40,0000 x attempt, because by default STAR uses it's 31G
+# Based on Tim's advice, upping CPUs to 6 and upping the threads (where every CPU=2threads/cores)
+rule genome_index:
+        input: fasta_file
+        output: genome+"index_done.txt"
+        resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
+        params: cpu=6,
+                fasta=fasta_file,
+                gff=gff_file,
+                output_indexdirec=genome+"indexing"
         shell:"""
- 			  cat {input.l1} {input.l2}> {output}
- 			  """
-
-#clips 5' leader and removes duplicated sequences from reads based on whether
-#there is an N in the first 20 bases of the sequence
-
-
-#Need a rule here to run through tagseq_clipper then fastx_clippers from tagseq_trim_launch
-rule trim_seq_fil:
-        input: project_path+"concatenated/"+"{sample}.fastq"
-        output: project_path+"clipped_tags/"+"{sample}_clip.fastq"
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params:cpu=1,
-               map=perl_path+"tagseq_clipper.pl",
-               seqs=project_path+"concatenated/"+"{sample}.fastq"
-        shell:"""
-              module load perl
-              module load fastx_toolkit
-              perl {params.map} {params.seqs} |\
-              fastx_clipper -a AAAAAAAA -l 20 -Q33 |\
-              fastx_clipper -a AGATCGGAAG -l 20 -Q33 |\
-              fastq_quality_filter -Q33 -q 20 -p 90 > {output}
-			  """
-
-#Below rule is to use specifically the tagseq_clipper tool. above rule for trim_seq_fill is the
-#correct rule to run the clipper and quality filter
-#rule clip_5pldr_dups:
-#        input: project_path+"concatenated/"+"{sample}.fastq"
-#        output:
-#               clips=project_path+"clipped_tags/"+"{sample}_clip.fastq",
-#               summaries=project_path+"concatenated/"+"{sample}.fastq.summary.txt"
-#        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-#        params:cpu=1,
-#               map=perl_path+"tagseq_clipper.pl",
-#               seqs=project_path+"concatenated/"+"{sample}.fastq"
-#        shell:"""
-#              module load perl
-#              perl {params.map} {params.seqs} > {output.clips}
-#			  """
-
-#Below rule is to copy the summaries of the tagseq_clipper tool into a different folder
-rule move_summaries:
-        input: project_path+"concatenated/"+"{sample}.fastq.summary.txt"
-        output: project_path+"clipped_tags/summaries/"+"{sample}.fastq.summary.txt"
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params:cpu=1,
-               summaries=project_path+"clipped_tags/summaries/"
-        shell:"""
-              cp {input} {params.summaries}
-			  """
-
-#Below rule is to concatenate the various summary files into one
-rule cat_summary:
-        input: expand(project_path+"clipped_tags/summaries/"+"{sample}.fastq.summary.txt", sample=ids)
-        output: project_path+"clipped_tags/summaries/summaries.txt"
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params:cpu=1,
-        shell:"""
-              cat {input} | sort -u > {output}
+              module load star
+              STAR --runThreadN 12 \
+              --runMode genomeGenerate \
+              --genomeDir {params.output_indexdirec} \
+              --genomeFastaFiles {params.fasta} \
+              --sjdbGTFfile {params.gff} \
+              --sjdbGTFtagExonParentTranscript Parent \
+              --sjdbOverhang 99
+              touch {output}
               """
-              #will have to come back later to look at how to delete beginning of string
 
 
-
-#Need a rule here to run through tagseq_clipper then fastx_clippers from tagseq_trim_launch
-#rule trim_seq_fil:
-#        input: project_path+"concatenated/"+"{sample}.fastq"
-#        output: project_path+"clipped_tags/"+"{sample}_clip.fastq"
-#        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-#        params:cpu=1,
-#               map=perl_path+"tagseq_clipper.pl",
-#               seqs=project_path+"concatenated/"+"{sample}.fastq"
-#        shell:"""
-#              module load perl
-#              module load fastx_toolkit
-#              perl {params.map} {params.seqs} |,
-#              fastx_clipper -a AAAAAAAA -l 20 -Q33 |,
-#              fastx_clipper -a AGATCGGAAG -l 20 -Q33 |,
-#              fastq_quality_filter -Q33 -q 20 -p 90 > {output}
-#			  """
-
-
-
-#rule stock:
-#        input:
-#        output:
-#        resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
-#        params:cpu=1
-#        shell:"""
+rule align_reads:
+        input: reads_path+"unzipped/"+"{sample}.trim.fastq"
+        output: reads_path+"BAM/{sample}/"+"Log.final.out"
+        resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
+        params: cpu=6,
+                ids="{sample}",
+                indexdirec=genome+"indexing",
+                folder_loca=reads_path+"BAM/{sample}/"
+        shell:"""
+              module load star
+              STAR --runThreadN 12 \
+              --runMode alignReads \
+              --genomeDir {params.indexdirec} \
+              --outSAMtype BAM Unsorted \
+              --readFilesIn {input} \
+              --outFileNamePrefix {params.folder_loca}
+              """
