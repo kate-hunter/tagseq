@@ -5,6 +5,10 @@
 #SBATCH --ntasks 1
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=
+#SBATCH --output=./report/%j.out #STDOUT
+#SBATCH --output=/dev/null
+#SBATCH --error=/dev/nul
+#SBATCH --error=./report/slurmout/slurm-%j.out
 
 #bash script for executing snakemake in cluster
 #important note yaml files need to have exactly four spaces to constitute an indent
