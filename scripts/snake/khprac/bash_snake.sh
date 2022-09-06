@@ -1,23 +1,15 @@
 #!/bin/bash
 #SBATCH --partition=kapheim-shared-np
 #SBATCH --account=kapheim-np
-#SBATCH --mem=1GB
-#SBATCH --ntasks 1
-#SBATCH --mail-type=FAIL
-#SBATCH --mail-user=
-#SBATCH --output=./report/%j.out #STDOUT
-#SBATCH --output=/dev/null
-#SBATCH --error=/dev/nul
-#SBATCH --error=./report/slurmout/slurm-%j.out
+#SBATCH --mem=2GB
+#SBATCH --ntasks 4
 
 #bash script for executing snakemake in cluster
 #important note yaml files need to have exactly four spaces to constitute an indent
-#you can change partition to and from kapheim-kp to kingspeak and account from kapheim-kp kapheim in the yaml file whose name is cluster.yaml
-#--error=front-%j.err --job-name=front-%j.out"
-#{cluster.cluster}=clusterprefix.cluster
 
-module load snakemake/5.6.0
-	snakemake -s snakefile --cluster-config cluster.yaml --jobs 8 \
+
+module load snakemake/6.4.1
+	snakemake -s snakefile --cluster-config cluster.yaml --jobs 4 \
 	--cluster "sbatch --ntasks=1 --time 1:00:00 --mem={resources.mem_mb} --cpus-per-task={params.cpu} -M {cluster.cluster} -A {cluster.account} -p {cluster.partition}" \
 	--latency-wait 10
 
