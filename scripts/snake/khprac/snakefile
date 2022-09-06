@@ -29,7 +29,7 @@ rule all:
               genome+"index_done.txt",
               expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids),
               expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam", sample=ids),
-              #expand(reads_path+"htseq/strandedisreverse/{sample}.txt", sample=ids),
+              expand(reads_path+"htseq/strandedisreverse/{sample}.txt", sample=ids)
               #reads_path+"htseq/matrix.csv"
 
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
