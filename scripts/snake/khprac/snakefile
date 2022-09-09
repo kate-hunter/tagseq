@@ -29,8 +29,9 @@ rule all:
               genome+"index_done.txt",
               expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids),
               expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam", sample=ids),
-              expand(reads_path+"htseq/strandedisreverse/{sample}.txt", sample=ids)
-              #reads_path+"htseq/matrix.csv"
+              expand(reads_path+"htseq/strandedisreverse/{sample}.txt", sample=ids),
+              reads_path+"htseq/strandedisreverse/matrix.csv",
+              expand(reads_path+"featurecounts/{sample}.txt", sample=ids)
 
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for
@@ -72,7 +73,7 @@ rule genome_index:
               """
 
 
-rule align_reads:
+rule align_reads_SAM:
         input: reads_path+"unzipped/"+"{sample}.trim.fastq"
         output: reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
         resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
@@ -134,7 +135,7 @@ rule counting:
                 gff=gff_file,
                 id="{sample}"
         shell:"""
-              module load python/3.6.3
+              module load python/3.7.3
               python -m HTSeq.scripts.count \
               -m union \
               -s reverse \
@@ -143,8 +144,42 @@ rule counting:
               {input} {params.gff} > {output}
               """
 
-rule combine_matrices:
-        input: reads_path+"htseq/"
+rule counting_yes:
+        input: sam = reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
+        output: reads_path+"htseq/strandyes/{sample}.txt"
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params: cpu=1,
+                gff=gff_file,
+                id="{sample}"
+        shell:"""
+              module load python/3.7.3
+              python -m HTSeq.scripts.count \
+              -m union \
+              -s yes \
+              -t mRNA \
+              -i Parent \
+              {input} {params.gff} > {output}
+              """
+
+rule counting_no:
+        input: sam = reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
+        output: reads_path+"htseq/strandedisno/{sample}.txt"
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params: cpu=1,
+                gff=gff_file,
+                id="{sample}"
+        shell:"""
+              module load python/3.7.3
+              python -m HTSeq.scripts.count \
+              -m union \
+              -s no \
+              -t mRNA \
+              -i Parent \
+              {input} {params.gff} > {output}
+              """
+
+rule combine_matrices_htseq:
+        input: reads_path+"htseq/strandedisreverse/"
         output: reads_path+"htseq/matrix.csv"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params: cpu=1,
@@ -154,3 +189,25 @@ rule combine_matrices:
               module load R
               Rscript {params.concat_script}
               """
+#Next steps:
+##Need to count how many genes are in the htseq matrix at each strandedness
+##Run feature counts and attempt to get a similar matrix here
+
+
+####featurecounts to run in order to see whether there were more matches with feature counts than with htseq
+rule featurecounts:
+        input: gff=gff_file, 
+               bam=reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam"
+        output: reads_path+"featurecounts/stranded/{sample}.txt"
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params: cpu=1
+        shell: """
+               module load subread/1.5.3
+               featureCounts  -F 'GTF' \
+               -a {input.gff} \
+               -g 'ID'\
+               -s 1 \
+               -t 'gene'\
+               -o {output} \
+               {input.bam}
+               """
