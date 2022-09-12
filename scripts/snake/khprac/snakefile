@@ -28,10 +28,13 @@ rule all:
               expand(reads_path+"unzipped/"+"{sample}.trim.fastq", sample=ids),
               genome+"index_done.txt",
               expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids),
-              expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam", sample=ids),
-              expand(reads_path+"htseq/strandedisreverse/{sample}.txt", sample=ids),
-              reads_path+"htseq/strandedisreverse/matrix.csv",
-              expand(reads_path+"featurecounts/{sample}.txt", sample=ids)
+              expand(reads_path+"output_data/{sample}/{sample}.progressdata", sample=ids),
+              #expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
+              #expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam", sample=ids),
+              expand(reads_path+"htseq/strandedisreverse/{sample}_coord.txt", sample=ids),
+              reads_path+"htseq/strandedisreverse/matrix.csv"
+
+              #expand(reads_path+"featurecounts/strandedisrev/{sample}.txt", sample=ids)
 
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for
@@ -91,25 +94,48 @@ rule align_reads_SAM:
               --outFileNamePrefix {params.folder_loca}
               """
 
-rule align_reads_BAM:
-        input: reads_path+"unzipped/"+"{sample}.trim.fastq"
-        output: reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam"
-        resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
-        params: cpu=6,
-                id="{sample}",
-                indexdirec=genome+"indexing",
-                folder_loca=reads_path+"BAM/{sample}/{sample}_"
-        shell:"""
-              module load star
-              STAR --runThreadN 12 \
-              --runMode alignReads \
-              --genomeDir {params.indexdirec} \
-              --outSAMtype BAM SortedByCoordinate \
-              --outSAMunmapped Within \
-              --readFilesIn {input} \
-              --outFileNamePrefix {params.folder_loca}\
-              --outSAMattributes Standard
-              """
+#Need a rule to combine leftovers into a file here 
+
+
+# rule align_reads_BAM_unsorted:
+#         input: reads_path+"unzipped/"+"{sample}.trim.fastq"
+#         output: reads_path+"BAM/unsorted/{sample}/"+"{sample}_Aligned.out.bam"
+#         resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
+#         params: cpu=6,
+#                 id="{sample}",
+#                 indexdirec=genome+"indexing",
+#                 folder_loca=reads_path+"BAM/{sample}/{sample}_"
+#         shell:"""
+#               module load star
+#               STAR --runThreadN 12 \
+#               --runMode alignReads \
+#               --genomeDir {params.indexdirec} \
+#               --outSAMtype BAM Unsorted\
+#               --outSAMunmapped Within \
+#               --readFilesIn {input} \
+#               --outFileNamePrefix {params.folder_loca}\
+#               --outSAMattributes Standard
+#               """
+
+# rule align_reads_BAM:
+#         input: reads_path+"unzipped/"+"{sample}.trim.fastq"
+#         output: reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam"
+#         resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
+#         params: cpu=6,
+#                 id="{sample}",
+#                 indexdirec=genome+"indexing",
+#                 folder_loca=reads_path+"BAM/{sample}/{sample}_"
+#         shell:"""
+#               module load star
+#               STAR --runThreadN 12 \
+#               --runMode alignReads \
+#               --genomeDir {params.indexdirec} \
+#               --outSAMtype BAM SortedByCoordinate \
+#               --outSAMunmapped Within \
+#               --readFilesIn {input} \
+#               --outFileNamePrefix {params.folder_loca}\
+#               --outSAMattributes Standard
+#               """
 
 
 # rule qualimap:
@@ -127,9 +153,10 @@ rule align_reads_BAM:
 # -i Parent because that's what the the attribute is called in gff
 #https://www.embopress.org/doi/full/10.15252/msb.20209539
 # above is the code that helped me decide what to do in relation to htseq
+
 rule counting:
         input: sam = reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
-        output: reads_path+"htseq/strandedisreverse/{sample}.txt"
+        output: reads_path+"htseq/strandedisreverse/{sample}_coord.txt"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params: cpu=1,
                 gff=gff_file,
@@ -138,49 +165,18 @@ rule counting:
               module load python/3.7.3
               python -m HTSeq.scripts.count \
               -m union \
+              -r pos \
               -s reverse \
               -t mRNA \
               -i Parent \
               {input} {params.gff} > {output}
               """
 
-rule counting_yes:
-        input: sam = reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
-        output: reads_path+"htseq/strandyes/{sample}.txt"
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params: cpu=1,
-                gff=gff_file,
-                id="{sample}"
-        shell:"""
-              module load python/3.7.3
-              python -m HTSeq.scripts.count \
-              -m union \
-              -s yes \
-              -t mRNA \
-              -i Parent \
-              {input} {params.gff} > {output}
-              """
-
-rule counting_no:
-        input: sam = reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
-        output: reads_path+"htseq/strandedisno/{sample}.txt"
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params: cpu=1,
-                gff=gff_file,
-                id="{sample}"
-        shell:"""
-              module load python/3.7.3
-              python -m HTSeq.scripts.count \
-              -m union \
-              -s no \
-              -t mRNA \
-              -i Parent \
-              {input} {params.gff} > {output}
-              """
+rule 
 
 rule combine_matrices_htseq:
         input: reads_path+"htseq/strandedisreverse/"
-        output: reads_path+"htseq/matrix.csv"
+        output: reads_path+"htseq/strandedisreverse/matrix.csv"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params: cpu=1,
                 concat_script=rscripts+"htseq_scriptconcat.R"
@@ -190,7 +186,7 @@ rule combine_matrices_htseq:
               Rscript {params.concat_script}
               """
 #Next steps:
-##Need to count how many genes are in the htseq matrix at each strandedness
+##Need to count how many genes were counted up after HTseq
 ##Run feature counts and attempt to get a similar matrix here
 
 
@@ -198,7 +194,7 @@ rule combine_matrices_htseq:
 rule featurecounts:
         input: gff=gff_file, 
                bam=reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam"
-        output: reads_path+"featurecounts/stranded/{sample}.txt"
+        output: reads_path+"featurecounts/strandedisrev/{sample}.txt"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params: cpu=1
         shell: """
@@ -206,7 +202,7 @@ rule featurecounts:
                featureCounts  -F 'GTF' \
                -a {input.gff} \
                -g 'ID'\
-               -s 1 \
+               -s 2 \
                -t 'gene'\
                -o {output} \
                {input.bam}
