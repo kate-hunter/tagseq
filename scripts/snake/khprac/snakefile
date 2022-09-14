@@ -18,6 +18,8 @@ genome="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_p
 fasta_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_genome_v2.1.0.fasta"
 gff_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_OGS_v2.1.0.gff3"
 rscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/Rstuff/"
+strandedness="reverse"
+#need to change line 143, and 182 if I change the strandedness
 #####End INPUT###
 
 
@@ -28,13 +30,13 @@ rule all:
               expand(reads_path+"unzipped/"+"{sample}.trim.fastq", sample=ids),
               genome+"index_done.txt",
               expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids),
-              expand(reads_path+"output_data/{sample}/{sample}.progressdata", sample=ids),
-              #expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
-              #expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam", sample=ids),
-              expand(reads_path+"htseq/strandedisreverse/{sample}_coord.txt", sample=ids),
-              reads_path+"htseq/strandedisreverse/matrix.csv"
-
-              #expand(reads_path+"featurecounts/strandedisrev/{sample}.txt", sample=ids)
+              expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
+              expand(reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam", sample=ids),
+              expand(reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt", sample=ids),
+              reads_path+"htseq/strandedis"+strandedness+"/matrix.csv",
+              expand(reads_path+"featurecounts/strandedis"+strandedness+"/{sample}.txt", sample=ids),
+              expand(reads_path+"outputsfolder/{sample}", sample=ids),
+              expand(reads_path+"outputsfolder/{sample}.summary", sample=ids)
 
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for
@@ -75,7 +77,6 @@ rule genome_index:
               touch {output}
               """
 
-
 rule align_reads_SAM:
         input: reads_path+"unzipped/"+"{sample}.trim.fastq"
         output: reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
@@ -94,48 +95,19 @@ rule align_reads_SAM:
               --outFileNamePrefix {params.folder_loca}
               """
 
+rule convertSAMtoBAMsort:
+        input: reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
+        output: bam=reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam",
+                sorted=reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam"
+        resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
+        params: cpu=2
+        shell:"""
+              module load samtools/1.5
+              samtools view -S -b {input}>{output.bam}
+              samtools sort {output.bam} -o {output.sorted} 
+              """
+
 #Need a rule to combine leftovers into a file here 
-
-
-# rule align_reads_BAM_unsorted:
-#         input: reads_path+"unzipped/"+"{sample}.trim.fastq"
-#         output: reads_path+"BAM/unsorted/{sample}/"+"{sample}_Aligned.out.bam"
-#         resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
-#         params: cpu=6,
-#                 id="{sample}",
-#                 indexdirec=genome+"indexing",
-#                 folder_loca=reads_path+"BAM/{sample}/{sample}_"
-#         shell:"""
-#               module load star
-#               STAR --runThreadN 12 \
-#               --runMode alignReads \
-#               --genomeDir {params.indexdirec} \
-#               --outSAMtype BAM Unsorted\
-#               --outSAMunmapped Within \
-#               --readFilesIn {input} \
-#               --outFileNamePrefix {params.folder_loca}\
-#               --outSAMattributes Standard
-#               """
-
-# rule align_reads_BAM:
-#         input: reads_path+"unzipped/"+"{sample}.trim.fastq"
-#         output: reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam"
-#         resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
-#         params: cpu=6,
-#                 id="{sample}",
-#                 indexdirec=genome+"indexing",
-#                 folder_loca=reads_path+"BAM/{sample}/{sample}_"
-#         shell:"""
-#               module load star
-#               STAR --runThreadN 12 \
-#               --runMode alignReads \
-#               --genomeDir {params.indexdirec} \
-#               --outSAMtype BAM SortedByCoordinate \
-#               --outSAMunmapped Within \
-#               --readFilesIn {input} \
-#               --outFileNamePrefix {params.folder_loca}\
-#               --outSAMattributes Standard
-#               """
 
 
 # rule qualimap:
@@ -155,28 +127,28 @@ rule align_reads_SAM:
 # above is the code that helped me decide what to do in relation to htseq
 
 rule counting:
-        input: sam = reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
-        output: reads_path+"htseq/strandedisreverse/{sample}_coord.txt"
+        input: reads_path+"BAM/{sample}/sortedbyname/{sample}namesort.bam"
+        output: reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params: cpu=1,
                 gff=gff_file,
-                id="{sample}"
+                id="{sample}",
+                strandedness="reverse"
         shell:"""
               module load python/3.7.3
               python -m HTSeq.scripts.count \
+              -f bam\
               -m union \
-              -r pos \
-              -s reverse \
+              -r name \
+              -s {params.strandedness}\
               -t mRNA \
               -i Parent \
               {input} {params.gff} > {output}
               """
 
-rule 
-
 rule combine_matrices_htseq:
-        input: reads_path+"htseq/strandedisreverse/"
-        output: reads_path+"htseq/strandedisreverse/matrix.csv"
+        input: reads_path+"htseq/strandedis"+strandedness+"/"
+        output: reads_path+"htseq/strandedis"+strandedness+"/matrix.csv"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params: cpu=1,
                 concat_script=rscripts+"htseq_scriptconcat.R"
@@ -185,25 +157,65 @@ rule combine_matrices_htseq:
               module load R
               Rscript {params.concat_script}
               """
-#Next steps:
-##Need to count how many genes were counted up after HTseq
-##Run feature counts and attempt to get a similar matrix here
 
 
 ####featurecounts to run in order to see whether there were more matches with feature counts than with htseq
+        #        featureCounts  -F 'GTF' \  ##for gff file
+        #        -a {input.gff} \ ### input gff file
+        #        -g 'ID'\  ##for the gene ID
+        #        -s 2 \ ##for reverse
+        #        -t 'gene'\  ##for what kind of ID
+        #        -O \ ###multi-overlap allowed
+
 rule featurecounts:
         input: gff=gff_file, 
-               bam=reads_path+"BAM/{sample}/"+"{sample}_Aligned.sortedByCoord.out.bam"
-        output: reads_path+"featurecounts/strandedisrev/{sample}.txt"
+               bam=reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam"
+        output: reads_path+"featurecounts/strandedis"+strandedness+"/{sample}.txt"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params: cpu=1
+        params: cpu=1,
+                strandedness="2"
         shell: """
                module load subread/1.5.3
-               featureCounts  -F 'GTF' \
+               featureCounts \
                -a {input.gff} \
                -g 'ID'\
-               -s 2 \
+               -s {params.strandedness} \
                -t 'gene'\
+               -O \
                -o {output} \
                {input.bam}
                """
+
+rule combine_outputs:
+        input: samlogs=reads_path+"SAM/{sample}/{sample}_Log.final.out",
+               htseq_logs=reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt",
+               featurecounts_logs=reads_path+"featurecounts/strandedis"+strandedness+"{sample}.txt.summary"
+        output: out=reads_path+"outputsfolder/{sample}",
+                temp=temp("{sample}.temp"),
+                temp1=temp("{sample}.temp1"),
+                temp2=temp("{sample}.temp2"),
+                temp3=temp("{sample}.temp3"),
+                temp4=temp("{sample}.temp4")
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params: cpu=2,
+                awks='{Total=Total+$2} END{print "Total is: " Total}'
+        shell:"""
+              tail -n 5 {input.htseq_logs} > {output.temp}
+              sed -e '1i\#############HTSEQ_data################' {output.temp} > {output.temp2}
+              sed -e '1i\#############SAM.log_data##############' {input.samlogs} > {output.temp1}
+              sed -e '1i\#############featurecounts.log##############' {input.featurecounts_logs} > {output.temp3}
+              head -n -5 {input.htseq_logs} | awk '{params.awks}' > {output.temp4}
+              cat {output.temp1} {output.temp2} {output.temp4} {output.temp3} > {output.out}
+              """
+#Now I want to make a file that will give me the changes in line number between each file
+#Number of reads mapped with SAM
+#Number of reads 
+
+rule read_number:
+        input: reads_path+"outputsfolder/{sample}"
+        output: reads_path+"outputsfolder/{sample}.summary"
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params: cpu=2    
+        shell:"""
+              sed -n '1p;7p;10p;25p;32p;39p;40p;44p;45p;46p;48p;54p;57p' {input}>{output}
+              """
