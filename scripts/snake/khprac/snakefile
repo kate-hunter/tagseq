@@ -18,7 +18,7 @@ genome="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_p
 fasta_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_genome_v2.1.0.fasta"
 gff_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_OGS_v2.1.0.gff3"
 rscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/Rstuff/"
-plscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/TagSeq_processing_code/tag"
+plscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/TagSeq_processing_code/"
 strandedness="unstranded"
 #need to change line 143, and 182 if I change the strandedness
 #discovered that strandedness needs to be no because this is single-end sequencing
@@ -69,8 +69,7 @@ rule clip:
               trim=reads_path+"trimmed/"
        shell:"""
              cd {params.input_path}
-             module load fastx_toolkit/0.0.13
-             perl {params.plscript} {input} '' 0 20 {params.trim}>{output.trim}
+             perl {params.plscript} {input} '' 0 20 > {output}
              """
 
 
@@ -242,4 +241,4 @@ rule read_number:
               sed -n '1p;7p;10p;25p;32p;39p;40p;44p;45p;46p;48p;54p;57p' {input}>{output}
               """
 
-#Alright, I think I'm finally onto the next step after featurecounts!!! 
+#Alright, I think I'm finally onto the next step after featurecounts!!!
