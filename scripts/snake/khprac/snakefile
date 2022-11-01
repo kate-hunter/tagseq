@@ -30,10 +30,10 @@ ids, =glob_wildcards(original_files+"{id}_L001_R1_001.fastq.gz")
 rule all:
         input:expand(original_files+"{sample}_L001_R1_001.fastq.gz", sample=ids),
               expand(reads_path+"concatenated/"+"{sample}.cmb.fastq.gz", sample=ids),
-              expand(reads_path+"trimmed/"+"{sample}.trim.fastq", sample=ids)
-              #expand(reads_path+"unzipped/"+"{sample}.trim.fastq", sample=ids),
+              expand(reads_path+"trimmed/"+"{sample}.trim.fastq", sample=ids),
+              expand(reads_path+"qual_filter/"+"{sample}.qualfilt", sample=ids)
               #genome+"index_done.txt",
-              #expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids),
+              #expand(reads_path+"SAM/KHfiles/{sample}/"+"{sample}_Aligned.out.sam", sample=ids)
               #expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
               #expand(reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam", sample=ids),
               #expand(reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt", sample=ids),
@@ -59,21 +59,35 @@ rule combine:
               zcat {input.input1} {input.input2} | gzip -c >{output}
               """
 
+#below rule checks for duplicates as well as only keeps sequences with the right leader sequence (then trims the leader)
 rule clip:
        input: reads_path+"concatenated/"+"{sample}.cmb.fastq.gz"
-       output: trim=reads_path+"trimmed/"+"{sample}.trim.fastq"
+       output: reads_path+"trimmed/"+"{sample}.trim.fastq"
        resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
-       params:cpu=1,
+       params:cpu=4,
               input_path=reads_path+"concatenated/",
               plscript=plscripts+"tagseq_clipper.anna.pl",
               trim=reads_path+"trimmed/"
        shell:"""
              cd {params.input_path}
-             perl {params.plscript} {input} '' 0 20 > {output}
+             chmod +x {params.plscript}
+             perl {params.plscript} {input} '' 0 24 > {output}
              """
 
+#the below rule quality filters as well as clips adaptors off
+rule fastxtools:
+       input: reads_path+"trimmed/"+"{sample}.trim.fastq"
+       output: reads_path+"qual_filter/"+"{sample}.qualfilt"
+       resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
+       params:cpu=4,
+              input_path=reads_path+"trimmed/"
+       shell:"""
+             cd {params.input_path}
+             module load fastx_toolkit
+             fastx_clipper -a AAAAAAAA -l 20 -Q33 -i {input} | fastx_clipper -a AGATCGGAAG -l 20 -Q33 | fastq_quality_filter -Q33 -q 20 -p 90 > {output}
+             """
 
-
+#| fastx_clipper -a AGATCGGAAG -l 20 -Q33 | fastq_quality_filter -Q33 -q 10 -p 90 >
 # The sjdbOverhang is 99 here because some seem to just stick with the defaults
 # the attempt change to 40,0000 x attempt, because by default STAR uses it's 31G
 # Based on Tim's advice, upping CPUs to 6 and upping the threads (where every CPU=2threads/cores)
@@ -98,13 +112,13 @@ rule genome_index:
               """
 
 rule align_reads_SAM:
-        input: reads_path+"unzipped/"+"{sample}.trim.fastq"
-        output: reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam"
+        input: reads_path+"qual_filter/"+"{sample}.qualfilt"
+        output: reads_path+"SAM/KHfiles/{sample}/"+"{sample}_Aligned.out.sam"
         resources: mem_mb=lambda wildcards,  attempt: (40000*attempt)
         params: cpu=6,
                 id="{sample}",
                 indexdirec=genome+"indexing",
-                folder_loca=reads_path+"SAM/{sample}/{sample}_"
+                folder_loca=reads_path+"SAM/KHfiles/{sample}/{sample}_"
         shell:"""
               module load star
               STAR --runThreadN 12 \

@@ -77,6 +77,6 @@ foreach $fqf (sort @fqs) {
     $cmd = $cmd."| cat - >$out_dir/$outname\n";
   }
   print $cmd;
-  #print "tagseq_clipper.pl $fqf | fastx_clipper -a AAAAAAAA -l 20 -Q33 | fastx_clipper -a AGATCGGAAG -l 20 -Q33 | fastq_quality_filter -Q33 -q 20 -p 90 >$outname\n";
+  #print "tagseq_clipper.pl $fqf | fastx_clipper -a AAAAAAAA -l 20 -Q33 | fastx_clipper -a AGATCGGAAG -l 20 -Q33 | fastq_quality_filter -Q33 -q 10 -p 90 >$outname\n";
 }
 
