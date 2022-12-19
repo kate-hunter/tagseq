@@ -31,7 +31,7 @@ rule all:
         input:expand(original_files+"{sample}_L001_R1_001.fastq.gz", sample=ids),
               expand(reads_path+"concatenated/"+"{sample}.cmb.fastq.gz", sample=ids),
               expand(reads_path+"trimmed/"+"{sample}.trim.fastq", sample=ids),
-              expand(reads_path+"qual_filter/"+"{sample}.qualfilt", sample=ids)
+              expand(reads_path+"qual_filter/cutadapt/"+"{sample}.qualfilt", sample=ids)
               #genome+"index_done.txt",
               #expand(reads_path+"SAM/KHfiles/{sample}/"+"{sample}_Aligned.out.sam", sample=ids)
               #expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
@@ -75,17 +75,25 @@ rule clip:
              """
 
 #the below rule quality filters as well as clips adaptors off
-rule fastxtools:
+rule cutadapt:
        input: reads_path+"trimmed/"+"{sample}.trim.fastq"
-       output: reads_path+"qual_filter/"+"{sample}.qualfilt"
+       output: reads_path+"qual_filter/cutadapt/"+"{sample}.qualfilt"
        resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
        params:cpu=4,
               input_path=reads_path+"trimmed/"
        shell:"""
              cd {params.input_path}
              module load fastx_toolkit
-             fastx_clipper -a AAAAAAAA -l 20 -Q33 -i {input} | fastx_clipper -a AGATCGGAAG -l 20 -Q33 | fastq_quality_filter -Q33 -q 20 -p 90 > {output}
+             module load cutadapt
+             cutadapt -a AAAAAAAAA -m 20 -O 4 -q 20 {input} | \
+             cutadapt -a AGATCGGAAG -m 20 -O 7 -q 20 - | \
+             fastq_quality_filter -Q33 -q 10 -p 90 > {output}
              """
+
+#The above will cut either the poly-A adaptor or the other adaptor, will remove anything that ends up being less than 20 bases (-m)
+#and will trim low-quality ends from reads at the 10. I decided to keep using the fastq_quality_filter because I couldn't tell whehter cutadapt would do this
+
+#| fastq_quality_filter -Q33 -q 10 -p 90
 
 #| fastx_clipper -a AGATCGGAAG -l 20 -Q33 | fastq_quality_filter -Q33 -q 10 -p 90 >
 # The sjdbOverhang is 99 here because some seem to just stick with the defaults
