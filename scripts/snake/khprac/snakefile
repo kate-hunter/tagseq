@@ -13,15 +13,14 @@
 project_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/"
 reads_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/"
 original_files="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/"
-#snake_scripts_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/"
+snake_scripts_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/"
 genome="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/"
 fasta_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_genome_v2.1.0.fasta"
 gff_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_OGS_v2.1.0.gff3"
 rscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/Rstuff/"
-plscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/TagSeq_processing_code/"
-strandedness="unstranded"
-#need to change line 143, and 182 if I change the strandedness
-#discovered that strandedness needs to be no because this is single-end sequencing
+plscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/"
+bashscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/bash_scripts/"
+
 #####End INPUT###
 
 
@@ -29,18 +28,21 @@ ids, =glob_wildcards(original_files+"{id}_L001_R1_001.fastq.gz")
 
 rule all:
         input:expand(original_files+"{sample}_L001_R1_001.fastq.gz", sample=ids),
-              expand(reads_path+"concatenated/"+"{sample}.cmb.fastq.gz", sample=ids),
-              expand(reads_path+"trimmed/"+"{sample}.trim.fastq", sample=ids),
-              expand(reads_path+"qual_filter/cutadapt/"+"{sample}.qualfilt", sample=ids)
+              #expand(reads_path+"concatenated/"+"{sample}.cmb.fastq.gz", sample=ids),
+              #expand(reads_path+"trimmed/"+"{sample}.trim.fastq", sample=ids),
+              #expand(reads_path+"qual_filter/cutadapt/"+"{sample}.qualfilt", sample=ids)
               #genome+"index_done.txt",
               #expand(reads_path+"SAM/KHfiles/{sample}/"+"{sample}_Aligned.out.sam", sample=ids)
               #expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
               #expand(reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam", sample=ids),
+              #expand(reads_path+"featurecounts/"+"{sample}.txt", sample=ids),
+              reads_path+"outputsfolder/seqcounts.csv", 
+              reads_path+"outputsfolder/concat.csv"
+              #expand(reads_path+"outputsfolder/"+"{sample}.summary", sample=ids)
+
+#Some rules I took out below
               #expand(reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt", sample=ids),
               #reads_path+"htseq/strandedis"+strandedness+"/matrix.csv",
-              #expand(reads_path+"featurecounts/strandedis"+strandedness+"/{sample}.txt", sample=ids),
-              #expand(reads_path+"outputsfolder/strandedis"+strandedness+"/{sample}", sample=ids),
-              #expand(reads_path+"outputsfolder/strandedis"+strandedness+"/{sample}.summary", sample=ids)
 
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for
@@ -66,7 +68,7 @@ rule clip:
        resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
        params:cpu=4,
               input_path=reads_path+"concatenated/",
-              plscript=plscripts+"tagseq_clipper.anna.pl",
+              plscript=plscripts+"tagseq_clipper.pl",
               trim=reads_path+"trimmed/"
        shell:"""
              cd {params.input_path}
@@ -150,73 +152,71 @@ rule convertSAMtoBAMsort:
               samtools sort {output.bam} -o {output.sorted} 
               """
 
-#Need a rule to combine leftovers into a file here 
-
-
 # rule qualimap:
-#         input:
-#         output:
-#         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-#         params: cpu=1
-#         shell:"""
-#               """
+        #         input:
+        #         output:
+        #         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        #         params: cpu=1
+        #         shell:"""
+        #               """
 
-#the parameters for the counting rule
-# -s should be yes (default, but I included it here) because Tagseq is strand-specific
-# -m should be union because the read can then overlap more than one feature
-# -t exon because the utr is getting transcribed.
-# -i Parent because that's what the the attribute is called in gff
-#https://www.embopress.org/doi/full/10.15252/msb.20209539
-# above is the code that helped me decide what to do in relation to htseq
+##### Here I chose to use featurecounts because it was recommended at UT Austin, but I'm keeping the HTseq line in in case I want to go back. 
+        #the parameters for the counting rule
+        # -s should be no (default is yes) 
+        #discovered that strandedness needs to be no because this is single-end sequencing
+        # -m should be union because the read can then overlap more than one feature
+        # -t exon because the utr is getting transcribed.
+        # -i Parent because that's what the the attribute is called in gff
+        #https://www.embopress.org/doi/full/10.15252/msb.20209539
+        # above is the code that helped me decide what to do in relation to htseq
 
-rule counting:
-        input: reads_path+"BAM/{sample}/sortedbyname/{sample}namesort.bam"
-        output: reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt"
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params: cpu=1,
-                gff=gff_file,
-                id="{sample}",
-                strands="no"
-        shell:"""
-              module load python/3.7.3
-              python -m HTSeq.scripts.count \
-              -f bam\
-              -m union \
-              -r name \
-              -s {params.strands}\
-              -t mRNA \
-              -i Parent \
-              {input} {params.gff} > {output}
-              """
+# rule counting:
+        #         input: reads_path+"BAM/{sample}/sortedbyname/{sample}namesort.bam"
+        #         output: reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt"
+        #         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        #         params: cpu=1,
+        #                 gff=gff_file,
+        #                 id="{sample}",
+        #                 strands="no"
+        #         shell:"""
+        #               module load python/3.7.3
+        #               python -m HTSeq.scripts.count \
+        #               -f bam\
+        #               -m union \
+        #               -r name \
+        #               -s {params.strands}\
+        #               -t mRNA \
+        #               -i Parent \
+        #               {input} {params.gff} > {output}
+        #               """
 
-rule combine_matrices_htseq:
-        input: reads_path+"htseq/strandedis"+strandedness+"/"
-        output: reads_path+"htseq/strandedis"+strandedness+"/matrix.csv"
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params: cpu=1,
-                concat_script=rscripts+"htseq_scriptconcat.R"
-        shell:"""
-              cd {input}
-              module load R
-              Rscript {params.concat_script}
-              """
-
+####rule combine_matrices_htseq:
+        #         input: reads_path+"htseq/"
+        #         output: reads_path+"htseq/"+"/matrix.csv"
+        #         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        #         params: cpu=1,
+        #                 concat_script=rscripts+"htseq_scriptconcat.R"
+        #         shell:"""
+        #               cd {input}
+        #               module load R
+        #               Rscript {params.concat_script}
+        #               """
 
 ####featurecounts to run in order to see whether there were more matches with feature counts than with htseq
         #        featureCounts  -F 'GTF' \  ##for gff file
         #        -a {input.gff} \ ### input gff file
         #        -g 'ID'\  ##for the gene ID
-        #        -s 2 \ ##for reverse
+        #        -s 1 \ ##because we have a sense-strand assay (positive)
         #        -t 'gene'\  ##for what kind of ID
         #        -O \ ###multi-overlap allowed
 
 rule featurecounts:
         input: gff=gff_file, 
                bam=reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam"
-        output: reads_path+"featurecounts/strandedis"+strandedness+"/{sample}.txt"
+        output: reads_path+"featurecounts/"+"{sample}.txt"
         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
         params: cpu=1,
-                strands='0'
+                strands='1'
         shell: """
                module load subread/1.5.3
                featureCounts \
@@ -229,38 +229,19 @@ rule featurecounts:
                {input.bam}
                """
 
-rule combine_outputs:
-        input: samlogs=reads_path+"SAM/{sample}/{sample}_Log.final.out",
-               htseq_logs=reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt",
-               featurecounts_logs=reads_path+"featurecounts/strandedis"+strandedness+"/{sample}.txt.summary"
-        output: out=reads_path+"outputsfolder/strandedis"+strandedness+"/{sample}",
-                temp=temp("{sample}.temp"),
-                temp1=temp("{sample}.temp1"),
-                temp2=temp("{sample}.temp2"),
-                temp3=temp("{sample}.temp3"),
-                temp4=temp("{sample}.temp4")
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params: cpu=2,
-                awks='{Total=Total+$2} END{print "Total is: " Total}'
-        shell:"""
-              tail -n 5 {input.htseq_logs} > {output.temp}
-              sed -e '1i\#############HTSEQ_data################' {output.temp} > {output.temp2}
-              sed -e '1i\#############SAM.log_data##############' {input.samlogs} > {output.temp1}
-              sed -e '1i\#############featurecounts.log##############' {input.featurecounts_logs} > {output.temp3}
-              head -n -5 {input.htseq_logs} | awk '{params.awks}' > {output.temp4}
-              cat {output.temp1} {output.temp2} {output.temp4} {output.temp3} > {output.out}
-              """
-#Now I want to make a file that will give me the changes in line number between each file
-#Number of reads mapped with SAM
-#Number of reads 
 
-rule read_number:
-        input: reads_path+"outputsfolder/strandedis"+strandedness+"/{sample}"
-        output: reads_path+"outputsfolder/strandedis"+strandedness+"/{sample}.summary"
-        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        params: cpu=2    
-        shell:"""
-              sed -n '1p;7p;10p;25p;32p;39p;40p;44p;45p;46p;48p;54p;57p' {input}>{output}
-              """
+###### Want to make a rule where I collect the counted outputs from each step
+#Ok, instead, I'm just going to run this as a separate bash script. 
+#Go to the tabulating.sh for this! 
 
-#Alright, I think I'm finally onto the next step after featurecounts!!!
+rule summaryoutput:
+       input: origfiles=original_files,
+              concatenated=reads_path+"concatenated/"
+       output: orig=reads_path+"outputsfolder/seqcounts.csv",
+               concat=reads_path+"outputsfolder/concat.csv"
+       resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
+       params:cpu=4,
+              bashscript=bashscripts+"tabulating.sh"
+       shell:"""
+              sh {params.bashscript} {output.orig} {output.concat} {input.origfiles} {input.concatenated}
+              """
