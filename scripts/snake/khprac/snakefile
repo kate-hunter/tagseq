@@ -20,7 +20,7 @@ gff_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate
 rscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/Rstuff/"
 plscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/"
 bashscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/bash_scripts/"
-
+awkscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/awk_scripts/"
 #####End INPUT###
 
 
@@ -36,8 +36,13 @@ rule all:
               #expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
               #expand(reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam", sample=ids),
               #expand(reads_path+"featurecounts/"+"{sample}.txt", sample=ids),
-              reads_path+"outputsfolder/seqcounts.csv", 
-              reads_path+"outputsfolder/concat.csv"
+              reads_path+"outputsfolder/seqcounts.txt", 
+              reads_path+"outputsfolder/concat.txt",
+              reads_path+"outputsfolder/cmb_orig.txt", 
+              reads_path+"outputsfolder/trim.txt",
+              reads_path+"outputsfolder/qual.txt",
+              reads_path+"outputsfolder/joined_tables.txt", 
+              reads_path+"outputsfolder/joined_long.txt"
               #expand(reads_path+"outputsfolder/"+"{sample}.summary", sample=ids)
 
 #Some rules I took out below
@@ -236,12 +241,47 @@ rule featurecounts:
 
 rule summaryoutput:
        input: origfiles=original_files,
-              concatenated=reads_path+"concatenated/"
-       output: orig=reads_path+"outputsfolder/seqcounts.csv",
-               concat=reads_path+"outputsfolder/concat.csv"
+              concatenated=reads_path+"concatenated/",
+              trimmed=reads_path+"trimmed/", 
+              qualfilt=reads_path+"qual_filter/cutadapt/"
+       output: orig=reads_path+"outputsfolder/seqcounts.txt",
+               concat=reads_path+"outputsfolder/concat.txt",
+               trim=reads_path+"outputsfolder/trim.txt",
+               qual=reads_path+"outputsfolder/qual.txt"
        resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
        params:cpu=4,
-              bashscript=bashscripts+"tabulating.sh"
+              bashscript_tab=bashscripts+"tabulating.sh", 
+              bashscript_nonzip=bashscripts+"summing_seq.sh"
        shell:"""
-              sh {params.bashscript} {output.orig} {output.concat} {input.origfiles} {input.concatenated}
-              """
+             sh {params.bashscript_tab} {input.origfiles} originalseqs_totals {output.orig} 
+             sh {params.bashscript_tab} {input.concatenated} concatenated_totals {output.concat}
+             sh {params.bashscript_nonzip} {input.trimmed} trimmed_totals {output.trim}
+             sh {params.bashscript_nonzip} {input.qualfilt} quality_totals {output.qual}
+             """
+             
+rule cmboutput:
+       input: orig=reads_path+"outputsfolder/seqcounts.txt"
+       output: cmb_orig=reads_path+"outputsfolder/cmb_orig.txt"
+       resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
+       params:cpu=4,
+              bashscript_comb=bashscripts+"combining.sh"
+       shell:"""
+             sh {params.bashscript_comb} {input.orig} {output.cmb_orig}
+             """
+
+#below is the rule to join all the tables together by their sample name and then to transpose join command will need to be adjusted based on the number of tables that go into this
+rule joined_tables:
+       input: first=reads_path+"outputsfolder/cmb_orig.txt",
+              sectolast=reads_path+"outputsfolder/concat.txt",
+              last=reads_path+"outputsfolder/trim.txt"
+       output: tall_table=reads_path+"outputsfolder/joined_tables.txt",
+               long_table=reads_path+"outputsfolder/joined_long.txt"
+       resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
+       params:cpu=4, 
+              awk_script=awkscripts+"tst.awk"
+       shell:"""
+             join --header {input.sectolast} {input.last} | join --header {input.first} - \
+             | column -t > {output.tall_table}
+             awk -f {params.awk_script} {output.tall_table} | column -t > {output.long_table}
+             """
+        
