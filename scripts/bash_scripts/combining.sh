@@ -7,6 +7,7 @@
 
 #step 1 is to change sample names with the below sed command, 
 #the below will combine the counts for both lanes so I can combine this with the concatenated table to make sure those all are correct values as well
+
 input_seqs1n2=$1
 output_cmbseqs=$2
 
