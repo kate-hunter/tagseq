@@ -1,0 +1,57 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 14
+Job counts:
+	count	jobs
+	1	all
+	3	counting
+	4
+
+[Thu Sep 15 13:31:14 2022]
+rule counting:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/12_S116/sortedbyname/12_S116namesort.bam
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisunstranded/12_S116.txt
+    jobid: 12
+    wildcards: sample=12_S116
+    resources: mem_mb=1000
+
+Submitted job 12 with external jobid 'Submitted batch job 5709906 on cluster notchpeak'.
+
+[Thu Sep 15 13:31:14 2022]
+rule counting:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/10_S111/sortedbyname/10_S111namesort.bam
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisunstranded/10_S111.txt
+    jobid: 13
+    wildcards: sample=10_S111
+    resources: mem_mb=1000
+
+Submitted job 13 with external jobid 'Submitted batch job 5709907 on cluster notchpeak'.
+
+[Thu Sep 15 13:31:14 2022]
+rule counting:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/sortedbyname/11_S109namesort.bam
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisunstranded/11_S109.txt
+    jobid: 11
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+Submitted job 11 with external jobid 'Submitted batch job 5709908 on cluster notchpeak'.
+[Thu Sep 15 13:32:44 2022]
+Finished job 13.
+1 of 4 steps (25%) done
+[Thu Sep 15 13:32:44 2022]
+Finished job 11.
+2 of 4 steps (50%) done
+[Thu Sep 15 13:32:54 2022]
+Finished job 12.
+3 of 4 steps (75%) done
+
+[Thu Sep 15 13:32:54 2022]
+localrule all:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/11_S109_L099_R1_cmb.trim.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/12_S116_L099_R1_cmb.trim.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/10_S111_L099_R1_cmb.trim.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/11_S109.trim.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/12_S116.trim.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/10_S111.trim.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/index_done.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/11_S109/11_S109_Aligned.out.sam, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/12_S116/12_S116_Aligned.out.sam, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/10_S111/10_S111_Aligned.out.sam, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/11_S109_Aligned.out.bam, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/12_S116/12_S116_Aligned.out.bam, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/10_S111/10_S111_Aligned.out.bam, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/sortedbycoord/11_S109namesort.bam, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/12_S116/sortedbycoord/12_S116namesort.bam, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/10_S111/sortedbycoord/10_S111namesort.bam, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisunstranded/11_S109.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisunstranded/12_S116.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisunstranded/10_S111.txt
+    jobid: 0
+
+[Thu Sep 15 13:32:54 2022]
+Finished job 0.
+4 of 4 steps (100%) done
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-09-15T133114.024434.snakemake.log

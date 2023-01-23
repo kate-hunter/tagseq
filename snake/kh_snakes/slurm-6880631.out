@@ -1,0 +1,34 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 32
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	joininginR
+	1
+
+[Mon Jan 23 11:33:20 2023]
+rule joininginR:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/cmb_orig.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/concat.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/trim.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/qual.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/align.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/featurecounts.txt
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/Rcombtable.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/joined_tables.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/joined_long.txt
+    jobid: 0
+    resources: mem_mb=1000
+
+column: /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/Rcombtable.txt: No such file or directory
+[Mon Jan 23 11:33:21 2023]
+Error in rule joininginR:
+    jobid: 0
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/Rcombtable.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/joined_tables.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/joined_long.txt
+    shell:
+        
+             cd /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/
+             Rscript /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/scripts/R_scripts/comb_tables.R /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/cmb_orig.txt /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/concat.txt /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/trim.txt /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/qual.txt /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/align.txt /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/featurecounts.txt Rcombtable.txt 
+             column -t /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/Rcombtable.txt> /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/joined_tables.txt
+             awk -f /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/scripts/awk_scripts/tst.awk /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/joined_tables.txt | column -t > /uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/joined_long.txt
+             
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Removing output files of failed job joininginR since they might be corrupted:
+/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/outputsfolder/joined_tables.txt
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message

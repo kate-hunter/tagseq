@@ -1,0 +1,80 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 8
+Job counts:
+	count	jobs
+	3	align_reads
+	1	all
+	4
+
+[Thu Feb 17 15:25:42 2022]
+rule align_reads:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/12_S116.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/12_S116/12_S116Log.final.out
+    jobid: 6
+    wildcards: sample=12_S116
+    resources: mem_mb=40000
+
+Submitted job 6 with external jobid 'Submitted batch job 3966919 on cluster notchpeak'.
+
+[Thu Feb 17 15:25:42 2022]
+rule align_reads:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/10_S111.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/10_S111/10_S111Log.final.out
+    jobid: 7
+    wildcards: sample=10_S111
+    resources: mem_mb=40000
+
+Submitted job 7 with external jobid 'Submitted batch job 3966920 on cluster notchpeak'.
+
+[Thu Feb 17 15:25:44 2022]
+rule align_reads:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/11_S109.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/11_S109Log.final.out
+    jobid: 5
+    wildcards: sample=11_S109
+    resources: mem_mb=40000
+
+Submitted job 5 with external jobid 'Submitted batch job 3966921 on cluster notchpeak'.
+[Thu Feb 17 15:26:22 2022]
+Error in rule align_reads:
+    jobid: 6
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/12_S116/12_S116Log.final.out
+    shell:
+        
+              module load star
+              STAR --runThreadN 12               --runMode alignReads               --genomeDir /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/indexing               --outSAMtype BAM Unsorted               --readFilesIn /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/12_S116.trim.fastq               --outFileNamePrefix /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/12_S116/
+              
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3966919 on cluster notchpeak
+
+Error executing rule align_reads on cluster (jobid: 6, external: Submitted batch job 3966919 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.cfayq38x/snakejob.align_reads.6.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Thu Feb 17 15:26:32 2022]
+Error in rule align_reads:
+    jobid: 7
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/10_S111/10_S111Log.final.out
+    shell:
+        
+              module load star
+              STAR --runThreadN 12               --runMode alignReads               --genomeDir /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/indexing               --outSAMtype BAM Unsorted               --readFilesIn /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/10_S111.trim.fastq               --outFileNamePrefix /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/10_S111/
+              
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3966920 on cluster notchpeak
+
+Error executing rule align_reads on cluster (jobid: 7, external: Submitted batch job 3966920 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.cfayq38x/snakejob.align_reads.7.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Thu Feb 17 15:26:32 2022]
+Error in rule align_reads:
+    jobid: 5
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/11_S109Log.final.out
+    shell:
+        
+              module load star
+              STAR --runThreadN 12               --runMode alignReads               --genomeDir /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/indexing               --outSAMtype BAM Unsorted               --readFilesIn /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/11_S109.trim.fastq               --outFileNamePrefix /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/
+              
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3966921 on cluster notchpeak
+
+Error executing rule align_reads on cluster (jobid: 5, external: Submitted batch job 3966921 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.cfayq38x/snakejob.align_reads.5.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-02-17T152542.597552.snakemake.log

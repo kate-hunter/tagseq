@@ -1,0 +1,23 @@
+Building DAG of jobs...
+Job counts:
+	count	jobs
+	1	all
+	2	clip_5pldr_dups
+	2	move_summaries
+	5
+
+[Thu Jan 20 19:33:49 2022]
+rule clip_5pldr_dups:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/11_S109.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/11_S109_clip.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/11_S109.summary.txt
+    jobid: 6
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+RuleException in line 59 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+'Params' object has no attribute 'summaries'
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/6.4.1/lib/python3.7/site-packages/snakemake-6.4.1-py3.7.egg/snakemake/executors/__init__.py", line 140, in run_jobs
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/6.4.1/lib/python3.7/site-packages/snakemake-6.4.1-py3.7.egg/snakemake/executors/__init__.py", line 145, in run
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/6.4.1/lib/python3.7/site-packages/snakemake-6.4.1-py3.7.egg/snakemake/executors/__init__.py", line 156, in _run
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/6.4.1/lib/python3.7/site-packages/snakemake-6.4.1-py3.7.egg/snakemake/executors/__init__.py", line 176, in printjob
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/6.4.1/lib/python3.7/site-packages/snakemake-6.4.1-py3.7.egg/snakemake/executors/__init__.py", line 162, in printjob

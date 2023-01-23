@@ -1,0 +1,4 @@
+Building DAG of jobs...
+WildcardError in line 25 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+Wildcards in input files cannot be determined from output files:
+'sample'

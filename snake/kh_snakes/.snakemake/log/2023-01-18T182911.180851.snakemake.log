@@ -1,0 +1,28 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 10
+Job counts:
+	count	jobs
+	1	align_reads_SAM
+	1	all
+	1	clip
+	1	cmboutput
+	1	convertSAMtoBAMsort
+	1	cutadapt
+	1	featurecounts
+	1	joininginR
+	1	summaryoutputs
+	9
+
+[Wed Jan 18 18:29:11 2023]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/21_S96.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/21_S96.trim.fastq
+    jobid: 9
+    wildcards: sample=21_S96
+    resources: mem_mb=1000
+
+WorkflowError in line 75 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+'Params' object has no attribute 'ntasks'
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/6.4.1/lib/python3.7/site-packages/snakemake-6.4.1-py3.7.egg/snakemake/executors/__init__.py", line 140, in run_jobs
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/6.4.1/lib/python3.7/site-packages/snakemake-6.4.1-py3.7.egg/snakemake/executors/__init__.py", line 1003, in run

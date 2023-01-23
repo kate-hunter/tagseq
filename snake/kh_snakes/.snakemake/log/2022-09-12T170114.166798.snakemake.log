@@ -1,0 +1,2 @@
+SyntaxErrorin line 105 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+No rule keywords allowed after run/shell/script/notebook/wrapper/template_engine/cwl in rule align_reads_SAM. (snakefile, line 105)

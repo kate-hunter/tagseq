@@ -1,0 +1,57 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 10
+Job counts:
+	count	jobs
+	2	align_reads_SAM
+	1	all
+	3
+
+[Wed Oct 19 11:08:34 2022]
+rule align_reads_SAM:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/11_S109.qualfilt
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/KHfiles_20/11_S109/11_S109_Aligned.out.sam
+    jobid: 9
+    wildcards: sample=11_S109
+    resources: mem_mb=40000
+
+Submitted job 9 with external jobid 'Submitted batch job 5957806 on cluster notchpeak'.
+
+[Wed Oct 19 11:08:35 2022]
+rule align_reads_SAM:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/10_S102.qualfilt
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/KHfiles_20/10_S102/10_S102_Aligned.out.sam
+    jobid: 8
+    wildcards: sample=10_S102
+    resources: mem_mb=40000
+
+Submitted job 8 with external jobid 'Submitted batch job 5957807 on cluster notchpeak'.
+[Wed Oct 19 11:09:15 2022]
+Error in rule align_reads_SAM:
+    jobid: 9
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/KHfiles_20/11_S109/11_S109_Aligned.out.sam
+    shell:
+        
+              module load star
+              STAR --runThreadN 12               --runMode alignReads               --genomeDir /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/indexing               --outSAMtype SAM               --readFilesIn /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/11_S109.qualfilt               --outFileNamePrefix /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/KHfiles/11_S109/11_S109_
+              
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5957806 on cluster notchpeak
+
+Error executing rule align_reads_SAM on cluster (jobid: 9, external: Submitted batch job 5957806 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.dmyq12vi/snakejob.align_reads_SAM.9.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Wed Oct 19 11:09:45 2022]
+Error in rule align_reads_SAM:
+    jobid: 8
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/KHfiles_20/10_S102/10_S102_Aligned.out.sam
+    shell:
+        
+              module load star
+              STAR --runThreadN 12               --runMode alignReads               --genomeDir /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/indexing               --outSAMtype SAM               --readFilesIn /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/10_S102.qualfilt               --outFileNamePrefix /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/KHfiles/10_S102/10_S102_
+              
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5957807 on cluster notchpeak
+
+Error executing rule align_reads_SAM on cluster (jobid: 8, external: Submitted batch job 5957807 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.dmyq12vi/snakejob.align_reads_SAM.8.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-10-19T110834.578149.snakemake.log

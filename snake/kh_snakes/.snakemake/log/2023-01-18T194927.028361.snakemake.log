@@ -1,0 +1,13 @@
+Building DAG of jobs...
+Generating unit tests for each rule...
+Skipping rule all because it does not execute anything.
+Generating unit test for rule combine: .tests/unit/test_combine.py.
+Generating unit test for rule clip: .tests/unit/test_clip.py.
+Generating unit test for rule cutadapt: .tests/unit/test_cutadapt.py.
+Generating unit test for rule genome_index: .tests/unit/test_genome_index.py.
+Generating unit test for rule align_reads_SAM: .tests/unit/test_align_reads_SAM.py.
+Generating unit test for rule convertSAMtoBAMsort: .tests/unit/test_convertSAMtoBAMsort.py.
+Generating unit test for rule featurecounts: .tests/unit/test_featurecounts.py.
+Generating unit test for rule summaryoutputs: .tests/unit/test_summaryoutputs.py.
+Generating unit test for rule cmboutput: .tests/unit/test_cmboutput.py.
+Generating unit test for rule joininginR: .tests/unit/test_joininginR.py.

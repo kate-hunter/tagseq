@@ -1,0 +1,12 @@
+#!/bin/sh
+# properties = {"type": "single", "rule": "featurecounts", "local": false, "input": ["/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_OGS_v2.1.0.gff3", "/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/11_S109_Aligned.sortedByCoord.out.bam"], "output": ["/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/11_S109.txt"], "wildcards": {"sample": "11_S109"}, "params": {}, "log": [], "threads": 1, "resources": {}, "jobid": 15, "cluster": {"cluster": "notchpeak", "partition": "kapheim-shared-np", "account": "kapheim-np"}}
+ cd /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac && \
+/uufs/chpc.utah.edu/sys/installdir/python/3.7.3/bin/python \
+-m snakemake /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/11_S109.txt --snakefile /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile \
+--force -j --keep-target-files --keep-remote --max-inventory-time 0 \
+--wait-for-files /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.yibz34bb /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_OGS_v2.1.0.gff3 /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/11_S109_Aligned.sortedByCoord.out.bam --latency-wait 10 \
+ --attempt 1 --force-use-threads --scheduler greedy \
+--wrapper-prefix https://github.com/snakemake/snakemake-wrappers/raw/ \
+   --allowed-rules featurecounts --nocolor --notemp --no-hooks --nolock --scheduler-solver-path /uufs/chpc.utah.edu/sys/installdir/python/3.7.3/bin \
+--mode 2  && touch /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.yibz34bb/15.jobfinished || (touch /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.yibz34bb/15.jobfailed; exit 1)
+

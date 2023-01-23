@@ -1,0 +1,13 @@
+Building DAG of jobs...
+Generating unit tests for each rule...
+Skipping rule all because it does not execute anything.
+Skipping rule genome_index as a unit test already exists for it: .tests/unit/test_genome_index.py.
+Skipping rule combine as a unit test already exists for it: .tests/unit/test_combine.py.
+Skipping rule clip as a unit test already exists for it: .tests/unit/test_clip.py.
+Skipping rule cutadapt as a unit test already exists for it: .tests/unit/test_cutadapt.py.
+Skipping rule align_reads_SAM as a unit test already exists for it: .tests/unit/test_align_reads_SAM.py.
+Skipping rule convertSAMtoBAMsort as a unit test already exists for it: .tests/unit/test_convertSAMtoBAMsort.py.
+Skipping rule featurecounts as a unit test already exists for it: .tests/unit/test_featurecounts.py.
+Skipping rule summaryoutputs as a unit test already exists for it: .tests/unit/test_summaryoutputs.py.
+Skipping rule cmboutput as a unit test already exists for it: .tests/unit/test_cmboutput.py.
+Skipping rule joininginR as a unit test already exists for it: .tests/unit/test_joininginR.py.

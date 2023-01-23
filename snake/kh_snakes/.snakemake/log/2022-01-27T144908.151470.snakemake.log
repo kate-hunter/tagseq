@@ -1,0 +1,59 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 8
+Job counts:
+	count	jobs
+	1	all
+	2	trim_seq_fil
+	3
+
+[Thu Jan 27 14:49:08 2022]
+rule trim_seq_fil:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/10_S102.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/10_S102.fastq.trim
+    jobid: 5
+    wildcards: sample=10_S102
+    resources: mem_mb=1000
+
+Submitted job 5 with external jobid 'Submitted batch job 3845424 on cluster notchpeak'.
+
+[Thu Jan 27 14:49:08 2022]
+rule trim_seq_fil:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/11_S109.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/11_S109.fastq.trim
+    jobid: 6
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+Submitted job 6 with external jobid 'Submitted batch job 3845425 on cluster notchpeak'.
+[Thu Jan 27 14:49:18 2022]
+Error in rule trim_seq_fil:
+    jobid: 5
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/10_S102.fastq.trim
+    shell:
+        
+              module load perl
+              module load cutadapt
+              perl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/tagseq_clipper.pl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/10_S102.fastq |              cutadapt - -a AAAAAAAA -a AGATCGG               -q 15 -m 25 -o" > /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/10_S102.fastq.trim
+			  
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3845424 on cluster notchpeak
+
+Error executing rule trim_seq_fil on cluster (jobid: 5, external: Submitted batch job 3845424 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp._y68mz3r/snakejob.trim_seq_fil.5.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Thu Jan 27 14:49:18 2022]
+Error in rule trim_seq_fil:
+    jobid: 6
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/11_S109.fastq.trim
+    shell:
+        
+              module load perl
+              module load cutadapt
+              perl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/tagseq_clipper.pl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/11_S109.fastq |              cutadapt - -a AAAAAAAA -a AGATCGG               -q 15 -m 25 -o" > /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/11_S109.fastq.trim
+			  
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3845425 on cluster notchpeak
+
+Error executing rule trim_seq_fil on cluster (jobid: 6, external: Submitted batch job 3845425 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp._y68mz3r/snakejob.trim_seq_fil.6.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-01-27T144908.151470.snakemake.log

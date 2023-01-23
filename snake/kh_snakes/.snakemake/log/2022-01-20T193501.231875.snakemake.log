@@ -1,0 +1,58 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 8
+Job counts:
+	count	jobs
+	1	all
+	2	clip_5pldr_dups
+	2	move_summaries
+	5
+
+[Thu Jan 20 19:35:01 2022]
+rule clip_5pldr_dups:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/11_S109.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/11_S109_clip.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/11_S109.summary.txt
+    jobid: 6
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+Submitted job 6 with external jobid 'Submitted batch job 3817751 on cluster notchpeak'.
+
+[Thu Jan 20 19:35:01 2022]
+rule clip_5pldr_dups:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/10_S102.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/10_S102_clip.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/10_S102.summary.txt
+    jobid: 5
+    wildcards: sample=10_S102
+    resources: mem_mb=1000
+
+Submitted job 5 with external jobid 'Submitted batch job 3817752 on cluster notchpeak'.
+[Thu Jan 20 19:35:41 2022]
+Error in rule clip_5pldr_dups:
+    jobid: 6
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/11_S109_clip.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/11_S109.summary.txt
+    shell:
+        
+              module load perl
+              perl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/tagseq_clipper.pl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/11_S109.fastq > /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/11_S109_clip.fastq
+			  
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3817751 on cluster notchpeak
+
+Error executing rule clip_5pldr_dups on cluster (jobid: 6, external: Submitted batch job 3817751 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.bdfd1gbl/snakejob.clip_5pldr_dups.6.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Thu Jan 20 19:35:51 2022]
+Error in rule clip_5pldr_dups:
+    jobid: 5
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/10_S102_clip.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/10_S102.summary.txt
+    shell:
+        
+              module load perl
+              perl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/perl_scripts/tagseq_clipper.pl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/10_S102.fastq > /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/clipped_tags/10_S102_clip.fastq
+			  
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3817752 on cluster notchpeak
+
+Error executing rule clip_5pldr_dups on cluster (jobid: 5, external: Submitted batch job 3817752 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.bdfd1gbl/snakejob.clip_5pldr_dups.5.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-01-20T193501.231875.snakemake.log

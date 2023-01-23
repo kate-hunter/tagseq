@@ -1,0 +1,3 @@
+SyntaxError:
+Not all output, log and benchmark files of rule concatenate_files contain the same wildcards. This is crucial though, in order to avoid that two or more jobs write to the same file.
+  File "/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile_prac", line 37, in <module>

@@ -1,0 +1,6 @@
+Building DAG of jobs...
+MissingInputException in rule all in line 30 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+Missing input files for rule all:
+    affected files:
+        /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/KHtry/10_S102/10_S102_Aligned.out.sam
+        /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/KHtry/11_S109/11_S109_Aligned.out.sam

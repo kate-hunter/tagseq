@@ -1,0 +1,7 @@
+Building DAG of jobs...
+MissingInputException in rule combine_outputs in line 189 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+Missing input files for rule combine_outputs:
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/strandedisno/11_S109, 11_S109.temp, 11_S109.temp1, 11_S109.temp2, 11_S109.temp3, 11_S109.temp4
+    wildcards: sample=11_S109
+    affected files:
+        /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/strandedisno/11_S109.txt.summary
