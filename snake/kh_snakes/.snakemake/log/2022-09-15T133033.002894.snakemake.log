@@ -1,6 +1,0 @@
-Building DAG of jobs...
-MissingInputException in rule combine_matrices_htseq in line 150 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
-Missing input files for rule combine_matrices_htseq:
-    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisunstranded/matrix.csv
-    affected files:
-        /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisunstranded
