@@ -1,0 +1,19 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 2
+Job counts:
+	count	jobs
+	1	all
+	2	create_one_dot_foo_file
+	3
+
+[Fri Dec 10 14:49:08 2021]
+rule create_one_dot_foo_file:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq
+    jobid: 1
+    wildcards: sample=10_S102_L001
+    resources: mem_mb=1000
+
+RuleException in line 19 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile_prac:
+NameError: The name 'cluster_snake' is unknown in this context. Please make sure that you defined that variable. Also note that braces not used for variable access have to be escaped by repeating them, i.e. {{print $1}}

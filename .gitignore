@@ -1,0 +1,5 @@
+#trying to ignore fastq folder
+fastq_practice/
+slurm*
+*.out
+.snakemake/

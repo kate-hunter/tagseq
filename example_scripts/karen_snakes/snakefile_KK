@@ -1,0 +1,47 @@
+rule star_pe_multi:
+    input:
+        genome_dir = "/uufs/chpc.utah.edu/common/home/kapheim-group1/mrot_maternalRNA/alignment_quantification_mRNAs/genome_index",
+        seqs_R1 = "/uufs/chpc.utah.edu/common/home/kapheim-group1/mrot_maternalRNA/alignment_quantification_mRNAs/trimmed/{sample}_R1.fastq.gz",
+        seqs_R2 = "/uufs/chpc.utah.edu/common/home/kapheim-group1/mrot_maternalRNA/alignment_quantification_mRNAs/trimmed/{sample}_R2.fastq.gz"
+    params:
+        prefix = "/uufs/chpc.utah.edu/common/home/kapheim-group1/mrot_maternalRNA/alignment_quantification_mRNAs/star_aligned/{sample}_",
+    output:
+        sam = "/uufs/chpc.utah.edu/common/home/kapheim-group1/mrot_maternalRNA/alignment_quantification_mRNAs/star_aligned/{sample}_Aligned.out.sam"
+    threads:
+        8
+    shell:"""
+        module load star/2.7.8a
+        STAR --runThreadN {threads} \
+        --genomeDir {input.genome_dir} \
+        --readFilesIn {input.seqs_R1} {input.seqs_R2} \
+        --readFilesCommand zcat \
+        --outFileNamePrefix {params.prefix} \
+        --clip3pNbases 0 \
+        --clip5pNbases 0
+        """
+
+
+
+# From STAR manual: "output unsorted Aligned.out.bam file. The paired ends of an alignment are always adjacent,
+# and multiple alignments of a read are adjacent as well. This ”unsorted” file can be directly
+# used with downstream software such as HTseq, without the need of name sorting. The order
+# of the reads will match that of the input FASTQ(A) files only if one thread is used
+# --runThread 1, and --outFilterType --BySJout is not used"
+
+rule counting:
+    input:
+        gff = "/uufs/chpc.utah.edu/common/home/kapheim-group1/mrot_maternalRNA/alignment_quantification_mRNAs/genome/Mrot_v1.1.gff",
+        sam = "/uufs/chpc.utah.edu/common/home/kapheim-group1/mrot_maternalRNA/alignment_quantification_mRNAs/star_aligned/{sample}_Aligned.out.sam"
+    output:
+       "/uufs/chpc.utah.edu/common/home/kapheim-group1/mrot_maternalRNA/alignment_quantification_mRNAs/htseq/counts_{sample}.txt"
+    threads:
+        8
+    shell:"""
+        module load python/3.6.3
+        python -m HTSeq.scripts.count \
+        -m union \
+        -s reverse \
+        -t CDS \
+        -i Parent \
+        {input.sam} {input.gff} > {output}
+        """

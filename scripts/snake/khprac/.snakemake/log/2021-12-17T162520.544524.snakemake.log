@@ -1,0 +1,71 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 8
+Job counts:
+	count	jobs
+	1	all
+	2	concatenate_files_cat
+	4	unzip_files
+	7
+
+[Fri Dec 17 16:25:20 2021]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/11_S109_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/11_S109_L002_R1_001.fastq
+    jobid: 4
+    wildcards: sample=11_S109, lane=2
+    resources: mem_mb=1000
+
+Submitted job 4 with external jobid 'Submitted batch job 3720773 on cluster notchpeak'.
+
+[Fri Dec 17 16:25:20 2021]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq
+    jobid: 1
+    wildcards: sample=10_S102, lane=1
+    resources: mem_mb=1000
+
+Submitted job 1 with external jobid 'Submitted batch job 3720774 on cluster notchpeak'.
+
+[Fri Dec 17 16:25:20 2021]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L002_R1_001.fastq
+    jobid: 2
+    wildcards: sample=10_S102, lane=2
+    resources: mem_mb=1000
+
+Submitted job 2 with external jobid 'Submitted batch job 3720775 on cluster notchpeak'.
+
+[Fri Dec 17 16:25:20 2021]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/11_S109_L001_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/11_S109_L001_R1_001.fastq
+    jobid: 3
+    wildcards: sample=11_S109, lane=1
+    resources: mem_mb=1000
+
+Submitted job 3 with external jobid 'Submitted batch job 3720776 on cluster notchpeak'.
+[Fri Dec 17 16:25:30 2021]
+Finished job 4.
+1 of 7 steps (14%) done
+[Fri Dec 17 16:25:41 2021]
+Finished job 1.
+2 of 7 steps (29%) done
+[Fri Dec 17 16:25:41 2021]
+Finished job 2.
+3 of 7 steps (43%) done
+
+[Fri Dec 17 16:25:41 2021]
+rule concatenate_files_cat:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L002_R1_001.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_merged.fastq
+    jobid: 5
+    wildcards: sample=10_S102
+
+[Fri Dec 17 16:25:41 2021]
+Finished job 3.
+4 of 7 steps (57%) done
+WorkflowError in line 31 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile_prac:
+'Resources' object has no attribute 'mem_mb'
