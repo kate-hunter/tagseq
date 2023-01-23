@@ -1,0 +1,100 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 8
+Job counts:
+	count	jobs
+	1	all
+	2	concatenate_files_cat
+	4	unzip_files
+	7
+
+[Fri Dec 17 19:37:16 2021]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/10_S102_L001_R1_001.fastq
+    jobid: 1
+    wildcards: sample=10_S102, lane=1
+    resources: mem_mb=1000
+
+Submitted job 1 with external jobid 'Submitted batch job 3721085 on cluster notchpeak'.
+
+[Fri Dec 17 19:37:16 2021]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/11_S109_L001_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/11_S109_L001_R1_001.fastq
+    jobid: 3
+    wildcards: sample=11_S109, lane=1
+    resources: mem_mb=1000
+
+Submitted job 3 with external jobid 'Submitted batch job 3721086 on cluster notchpeak'.
+
+[Fri Dec 17 19:37:16 2021]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/11_S109_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/11_S109_L002_R1_001.fastq
+    jobid: 4
+    wildcards: sample=11_S109, lane=2
+    resources: mem_mb=1000
+
+Submitted job 4 with external jobid 'Submitted batch job 3721087 on cluster notchpeak'.
+
+[Fri Dec 17 19:37:16 2021]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/10_S102_L002_R1_001.fastq
+    jobid: 2
+    wildcards: sample=10_S102, lane=2
+    resources: mem_mb=1000
+
+Submitted job 2 with external jobid 'Submitted batch job 3721088 on cluster notchpeak'.
+[Fri Dec 17 19:37:26 2021]
+Error in rule unzip_files:
+    jobid: 1
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/10_S102_L001_R1_001.fastq
+    shell:
+        
+			       zcat /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L001_R1_001.fastq.gz > /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/10_S102_L001_R1_001.fastq
+						 
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3721085 on cluster notchpeak
+
+Error executing rule unzip_files on cluster (jobid: 1, external: Submitted batch job 3721085 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.n0t0w0do/snakejob.unzip_files.1.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Fri Dec 17 19:37:26 2021]
+Error in rule unzip_files:
+    jobid: 3
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/11_S109_L001_R1_001.fastq
+    shell:
+        
+			       zcat /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/11_S109_L001_R1_001.fastq.gz > /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/11_S109_L001_R1_001.fastq
+						 
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3721086 on cluster notchpeak
+
+Error executing rule unzip_files on cluster (jobid: 3, external: Submitted batch job 3721086 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.n0t0w0do/snakejob.unzip_files.3.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Fri Dec 17 19:37:26 2021]
+Error in rule unzip_files:
+    jobid: 4
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/11_S109_L002_R1_001.fastq
+    shell:
+        
+			       zcat /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/11_S109_L002_R1_001.fastq.gz > /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/11_S109_L002_R1_001.fastq
+						 
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3721087 on cluster notchpeak
+
+Error executing rule unzip_files on cluster (jobid: 4, external: Submitted batch job 3721087 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.n0t0w0do/snakejob.unzip_files.4.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Fri Dec 17 19:37:26 2021]
+Error in rule unzip_files:
+    jobid: 2
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/10_S102_L002_R1_001.fastq
+    shell:
+        
+			       zcat /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/10_S102_L002_R1_001.fastq.gz > /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/unzipped/10_S102_L002_R1_001.fastq
+						 
+        (exited with non-zero exit code)
+    cluster_jobid: Submitted batch job 3721088 on cluster notchpeak
+
+Error executing rule unzip_files on cluster (jobid: 2, external: Submitted batch job 3721088 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.n0t0w0do/snakejob.unzip_files.2.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2021-12-17T193715.953858.snakemake.log

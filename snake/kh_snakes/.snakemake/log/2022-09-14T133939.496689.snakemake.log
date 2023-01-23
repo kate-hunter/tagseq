@@ -1,0 +1,135 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 14
+Job counts:
+	count	jobs
+	1	all
+	3	combine_outputs
+	3	read_number
+	7
+
+[Wed Sep 14 13:39:40 2022]
+rule combine_outputs:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/11_S109/11_S109_Log.final.out, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/11_S109.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/strandedisrev/11_S109.txt.summary
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109, 11_S109.temp, 11_S109.temp1, 11_S109.temp2, 11_S109.temp3, 11_S109.temp4
+    jobid: 18
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+Submitted job 18 with external jobid 'Submitted batch job 5707380 on cluster notchpeak'.
+
+[Wed Sep 14 13:39:40 2022]
+rule combine_outputs:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/12_S116/12_S116_Log.final.out, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/12_S116.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/strandedisrev/12_S116.txt.summary
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/12_S116, 12_S116.temp, 12_S116.temp1, 12_S116.temp2, 12_S116.temp3, 12_S116.temp4
+    jobid: 19
+    wildcards: sample=12_S116
+    resources: mem_mb=1000
+
+Submitted job 19 with external jobid 'Submitted batch job 5707381 on cluster notchpeak'.
+
+[Wed Sep 14 13:39:40 2022]
+rule combine_outputs:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/10_S111/10_S111_Log.final.out, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/10_S111.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/strandedisrev/10_S111.txt.summary
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/10_S111, 10_S111.temp, 10_S111.temp1, 10_S111.temp2, 10_S111.temp3, 10_S111.temp4
+    jobid: 20
+    wildcards: sample=10_S111
+    resources: mem_mb=1000
+
+Submitted job 20 with external jobid 'Submitted batch job 5707382 on cluster notchpeak'.
+Removing temporary output file 11_S109.temp.
+Removing temporary output file 11_S109.temp1.
+Removing temporary output file 11_S109.temp2.
+Removing temporary output file 11_S109.temp3.
+Removing temporary output file 11_S109.temp4.
+[Wed Sep 14 13:39:50 2022]
+Finished job 18.
+1 of 7 steps (14%) done
+
+[Wed Sep 14 13:39:50 2022]
+rule read_number:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109.summary
+    jobid: 21
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+Removing temporary output file 12_S116.temp.
+Removing temporary output file 12_S116.temp1.
+Removing temporary output file 12_S116.temp2.
+Removing temporary output file 12_S116.temp3.
+Removing temporary output file 12_S116.temp4.
+[Wed Sep 14 13:39:50 2022]
+Finished job 19.
+2 of 7 steps (29%) done
+Removing temporary output file 10_S111.temp.
+Removing temporary output file 10_S111.temp1.
+Removing temporary output file 10_S111.temp2.
+Removing temporary output file 10_S111.temp3.
+Removing temporary output file 10_S111.temp4.
+[Wed Sep 14 13:39:50 2022]
+Finished job 20.
+3 of 7 steps (43%) done
+Submitted job 21 with external jobid 'Submitted batch job 5707383 on cluster notchpeak'.
+
+[Wed Sep 14 13:39:50 2022]
+rule read_number:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/12_S116
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/12_S116.summary
+    jobid: 22
+    wildcards: sample=12_S116
+    resources: mem_mb=1000
+
+Submitted job 22 with external jobid 'Submitted batch job 5707384 on cluster notchpeak'.
+
+[Wed Sep 14 13:39:50 2022]
+rule read_number:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/10_S111
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/10_S111.summary
+    jobid: 23
+    wildcards: sample=10_S111
+    resources: mem_mb=1000
+
+Submitted job 23 with external jobid 'Submitted batch job 5707385 on cluster notchpeak'.
+[Wed Sep 14 13:40:00 2022]
+Error in rule read_number:
+    jobid: 21
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109.summary
+    shell:
+        
+              sed -n '1p;7p;10p;25p;32p;39p;40p;44p;45p;47p;53p;56p' /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109 |
+               /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109.summary
+              
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5707383 on cluster notchpeak
+
+Error executing rule read_number on cluster (jobid: 21, external: Submitted batch job 5707383 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.chlh_8om/snakejob.read_number.21.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Wed Sep 14 13:40:00 2022]
+Error in rule read_number:
+    jobid: 22
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/12_S116.summary
+    shell:
+        
+              sed -n '1p;7p;10p;25p;32p;39p;40p;44p;45p;47p;53p;56p' /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/12_S116 |
+               /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/12_S116.summary
+              
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5707384 on cluster notchpeak
+
+Error executing rule read_number on cluster (jobid: 22, external: Submitted batch job 5707384 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.chlh_8om/snakejob.read_number.22.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Wed Sep 14 13:40:00 2022]
+Error in rule read_number:
+    jobid: 23
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/10_S111.summary
+    shell:
+        
+              sed -n '1p;7p;10p;25p;32p;39p;40p;44p;45p;47p;53p;56p' /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/10_S111 |
+               /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/10_S111.summary
+              
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5707385 on cluster notchpeak
+
+Error executing rule read_number on cluster (jobid: 23, external: Submitted batch job 5707385 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.chlh_8om/snakejob.read_number.23.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-09-14T133939.496689.snakemake.log

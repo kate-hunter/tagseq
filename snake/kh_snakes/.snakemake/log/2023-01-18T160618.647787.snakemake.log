@@ -1,0 +1,5 @@
+ValueErrorin line 36 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+Single '}' encountered in format string
+  File "/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile", line 36, in <module>
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/7.12.1/miniconda3/lib/python3.9/string.py", line 165, in vformat
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/7.12.1/miniconda3/lib/python3.9/string.py", line 174, in _vformat

@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 14
+Job counts:
+	count	jobs
+	1	all
+	1	combine_matrices_htseq
+	3	featurecounts
+	5
+
+[Fri Sep  9 12:48:00 2022]
+rule combine_matrices_htseq:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/matrix.csv
+    jobid: 14
+    resources: mem_mb=1000
+
+Submitted job 14 with external jobid 'Submitted batch job 5675012 on cluster notchpeak'.
+
+[Fri Sep  9 12:48:00 2022]
+rule featurecounts:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_OGS_v2.1.0.gff3, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/11_S109_Aligned.sortedByCoord.out.bam
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/11_S109.txt
+    jobid: 15
+    wildcards: sample=11_S109
+
+WorkflowError in line 198 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+'Resources' object has no attribute 'mem_mb'
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/6.4.1/lib/python3.7/site-packages/snakemake-6.4.1-py3.7.egg/snakemake/executors/__init__.py", line 140, in run_jobs
+  File "/uufs/chpc.utah.edu/sys/installdir/snakemake/6.4.1/lib/python3.7/site-packages/snakemake-6.4.1-py3.7.egg/snakemake/executors/__init__.py", line 1003, in run

@@ -1,0 +1,40 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 10
+Job counts:
+	count	jobs
+	1	align_reads_SAM
+	1	all
+	1	convertSAMtoBAMsort
+	1	cutadapt
+	1	featurecounts
+	1	summaryoutputs
+	6
+
+[Wed Jan 18 19:04:02 2023]
+rule cutadapt:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/33_S97.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/cutadapt/33_S97.qualfilt
+    jobid: 13
+    wildcards: sample=33_S97
+    resources: mem_mb=1000
+
+Submitted job 13 with external jobid 'Submitted batch job 6831798 on cluster notchpeak'.
+[Wed Jan 18 19:04:12 2023]
+Error in rule cutadapt:
+    jobid: 13
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/cutadapt/33_S97.qualfilt
+    shell:
+        
+             cd /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/
+             module load fastx_toolkit
+             module load cutadapt
+             cutadapt -a AAAAAAAAA -m 20 -O 4 -q 20 /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/33_S97.trim.fastq |              cutadapt -a AGATCGGAAG -m 20 -O 7 -q 20 - |              fastq_quality_filter -Q33 -q 10 -p 90 > /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/cutadapt/33_S97.qualfilt
+             
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 6831798 on cluster notchpeak
+
+Error executing rule cutadapt on cluster (jobid: 13, external: Submitted batch job 6831798 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.uerkgsob/snakejob.cutadapt.13.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2023-01-18T190401.964947.snakemake.log

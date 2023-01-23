@@ -1,0 +1,153 @@
+Building DAG of jobs...
+Job stats:
+job         count    min threads    max threads
+--------  -------  -------------  -------------
+all             1              1              1
+clip            6              1              1
+combine         6              1              1
+cutadapt        6              1              1
+total          19              1              1
+
+
+[Wed Nov  2 15:41:28 2022]
+rule combine:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/11_S109_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/11_S109_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/11_S109.cmb.fastq.gz
+    jobid: 2
+    reason: Code has changed since last execution
+    wildcards: sample=11_S109
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule combine:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/10_S102_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/10_S102_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/10_S102.cmb.fastq.gz
+    jobid: 1
+    reason: Code has changed since last execution
+    wildcards: sample=10_S102
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule combine:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/21_S96_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/21_S96_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/21_S96.cmb.fastq.gz
+    jobid: 3
+    reason: Code has changed since last execution
+    wildcards: sample=21_S96
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule combine:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/29_S67_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/29_S67_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/29_S67.cmb.fastq.gz
+    jobid: 4
+    reason: Code has changed since last execution
+    wildcards: sample=29_S67
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule combine:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/33_S97_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/33_S97_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/33_S97.cmb.fastq.gz
+    jobid: 5
+    reason: Code has changed since last execution
+    wildcards: sample=33_S97
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule combine:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/40_S60_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/40_S60_L002_R1_001.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/40_S60.cmb.fastq.gz
+    jobid: 6
+    reason: Code has changed since last execution
+    wildcards: sample=40_S60
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/10_S102.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/10_S102.trim.fastq
+    jobid: 7
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/10_S102.cmb.fastq.gz
+    wildcards: sample=10_S102
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/11_S109.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/11_S109.trim.fastq
+    jobid: 8
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/11_S109.cmb.fastq.gz
+    wildcards: sample=11_S109
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/21_S96.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/21_S96.trim.fastq
+    jobid: 9
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/21_S96.cmb.fastq.gz
+    wildcards: sample=21_S96
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/29_S67.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/29_S67.trim.fastq
+    jobid: 10
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/29_S67.cmb.fastq.gz
+    wildcards: sample=29_S67
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/33_S97.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/33_S97.trim.fastq
+    jobid: 11
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/33_S97.cmb.fastq.gz
+    wildcards: sample=33_S97
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/40_S60.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/40_S60.trim.fastq
+    jobid: 12
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/40_S60.cmb.fastq.gz
+    wildcards: sample=40_S60
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Nov  2 15:41:28 2022]
+rule cutadapt:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/21_S96.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/cutadapt/21_S96.qualfilt
+    jobid: 15
+    reason: Missing output files: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/cutadapt/21_S96.qualfilt; Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/21_S96.trim.fastq
+    wildcards: sample=21_S96
+    resources: tmpdir=/tmp, mem_mb=1000
+
+Some jobs were triggered by provenance information, see 'reason' section in the rule displays above.
+If you prefer that only modification time is used to determine whether a job shall be executed, use the command line option '--rerun-triggers mtime' (also see --help).
+If you are sure that a change for a certain output file (say, <outfile>) won't change the result (e.g. because you just changed the formatting of a script or environment definition), you can also wipe its metadata to skip such a trigger via 'snakemake --cleanup-metadata <outfile>'. 
+Rules with provenance triggered jobs: combine
+
+RuleException in rule cutadapt in line 78 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+IndexError: tuple index out of range, when formatting the following:
+
+             cd {params.input_path}
+             module load fastx_toolkit
+             module load cutadapt
+             cutadapt -a "A{10}" -m 20 -O 4 -q 20 {input} | cutadapt -a AGATCGGAAG -m 20 -O 7 -q 20 - > {output}
+             

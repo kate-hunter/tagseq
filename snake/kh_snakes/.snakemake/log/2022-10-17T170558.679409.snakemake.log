@@ -1,0 +1,59 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 5
+Job counts:
+	count	jobs
+	1	all
+	2	clip
+	3
+
+[Mon Oct 17 17:05:59 2022]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/10_S102.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/10_S102.trim.fastq
+    jobid: 3
+    wildcards: sample=10_S102
+    resources: mem_mb=1000
+
+Submitted job 3 with external jobid 'Submitted batch job 5941916 on cluster notchpeak'.
+
+[Mon Oct 17 17:05:59 2022]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/11_S109.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/11_S109.trim.fastq
+    jobid: 4
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+Submitted job 4 with external jobid 'Submitted batch job 5941917 on cluster notchpeak'.
+[Mon Oct 17 17:06:09 2022]
+Error in rule clip:
+    jobid: 3
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/10_S102.trim.fastq
+    shell:
+        
+             cd /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/
+             module load fastx_toolkit/0.0.13
+             perl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/TagSeq_processing_code/tagtagseq_clipper.anna.pl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/10_S102.cmb.fastq.gz '' 0 20 /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/>/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/10_S102.trim.fastq
+             
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5941916 on cluster notchpeak
+
+Error executing rule clip on cluster (jobid: 3, external: Submitted batch job 5941916 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.b1j8vkox/snakejob.clip.3.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Mon Oct 17 17:06:19 2022]
+Error in rule clip:
+    jobid: 4
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/11_S109.trim.fastq
+    shell:
+        
+             cd /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/
+             module load fastx_toolkit/0.0.13
+             perl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/TagSeq_processing_code/tagtagseq_clipper.anna.pl /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/11_S109.cmb.fastq.gz '' 0 20 /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/>/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/11_S109.trim.fastq
+             
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5941917 on cluster notchpeak
+
+Error executing rule clip on cluster (jobid: 4, external: Submitted batch job 5941917 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.b1j8vkox/snakejob.clip.4.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-10-17T170558.679409.snakemake.log

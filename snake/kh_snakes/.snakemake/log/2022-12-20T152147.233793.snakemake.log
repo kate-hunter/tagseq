@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 2
+Job counts:
+	count	jobs
+	1	all
+	1	summaryoutput
+	2
+
+[Tue Dec 20 15:21:47 2022]
+rule summaryoutput:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/seqcounts.csv
+    jobid: 1
+    resources: mem_mb=1000
+
+Submitted job 1 with external jobid 'Submitted batch job 6573915 on cluster notchpeak'.
+[Tue Dec 20 15:22:57 2022]
+Finished job 1.
+1 of 2 steps (50%) done
+
+[Tue Dec 20 15:22:57 2022]
+localrule all:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/10_S102_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/11_S109_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/21_S96_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/29_S67_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/33_S97_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/original_files/40_S60_L001_R1_001.fastq.gz, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/seqcounts.csv
+    jobid: 0
+
+[Tue Dec 20 15:22:57 2022]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-12-20T152147.233793.snakemake.log

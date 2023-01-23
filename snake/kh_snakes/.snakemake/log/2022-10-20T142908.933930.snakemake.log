@@ -1,0 +1,49 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 10
+Job counts:
+	count	jobs
+	1	all
+	1	clip
+	1	fastxtools
+	3
+
+[Thu Oct 20 14:29:09 2022]
+rule clip:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/concatenated/11_S109.cmb.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/11_S109.trim.fastq
+    jobid: 4
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+Submitted job 4 with external jobid 'Submitted batch job 5973662 on cluster notchpeak'.
+[Thu Oct 20 14:29:49 2022]
+Finished job 4.
+1 of 3 steps (33%) done
+
+[Thu Oct 20 14:29:49 2022]
+rule fastxtools:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/11_S109.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/11_S109.qualfilt
+    jobid: 6
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+Submitted job 6 with external jobid 'Submitted batch job 5973671 on cluster notchpeak'.
+[Thu Oct 20 14:29:59 2022]
+Error in rule fastxtools:
+    jobid: 6
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/11_S109.qualfilt
+    shell:
+        
+             cd /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/
+             module load fastx_toolkit
+             fastx_clipper -a AAAAAAAA -l 20 -Q33 -i /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/trimmed/11_S109.trim.fastq | fastx_clipper -a AGATCGGAAG -l 20 -Q33 | fastq_quality_filter -Q33 -q 10 -p 90> /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/qual_filter/11_S109.qualfilt
+             
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5973671 on cluster notchpeak
+
+Error executing rule fastxtools on cluster (jobid: 6, external: Submitted batch job 5973671 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.oezkzlrg/snakejob.fastxtools.6.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-10-20T142908.933930.snakemake.log

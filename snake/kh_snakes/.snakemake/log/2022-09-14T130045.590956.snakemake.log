@@ -1,0 +1,186 @@
+Building DAG of jobs...
+Job stats:
+job                       count    min threads    max threads
+----------------------  -------  -------------  -------------
+align_reads_SAM               3              1              1
+all                           1              1              1
+combine_matrices_htseq        1              1              1
+combine_outputs               3              1              1
+convertSAMtoBAMsort           3              1              1
+counting                      3              1              1
+featurecounts                 3              1              1
+genome_index                  1              1              1
+read_number                   3              1              1
+unzip_files                   3              1              1
+total                        24              1              1
+
+
+[Wed Sep 14 13:00:46 2022]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/12_S116_L099_R1_cmb.trim.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/12_S116.trim.fastq
+    jobid: 2
+    reason: Code has changed since last execution
+    wildcards: sample=12_S116
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/10_S111_L099_R1_cmb.trim.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/10_S111.trim.fastq
+    jobid: 3
+    reason: Code has changed since last execution
+    wildcards: sample=10_S111
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule counting:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/sortedbyname/11_S109namesort.bam
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/11_S109.txt
+    jobid: 11
+    reason: Code has changed since last execution
+    wildcards: sample=11_S109
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule counting:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/10_S111/sortedbyname/10_S111namesort.bam
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/10_S111.txt
+    jobid: 13
+    reason: Code has changed since last execution
+    wildcards: sample=10_S111
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule unzip_files:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/11_S109_L099_R1_cmb.trim.fastq.gz
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/11_S109.trim.fastq
+    jobid: 1
+    reason: Code has changed since last execution
+    wildcards: sample=11_S109
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule genome_index:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/genome_files/NMEL_genome_v2.1.0.fasta
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/index_done.txt
+    jobid: 4
+    reason: Code has changed since last execution
+    resources: tmpdir=/tmp, mem_mb=40000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule counting:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/12_S116/sortedbyname/12_S116namesort.bam
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/12_S116.txt
+    jobid: 12
+    reason: Code has changed since last execution
+    wildcards: sample=12_S116
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule combine_matrices_htseq:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/matrix.csv
+    jobid: 14
+    reason: Code has changed since last execution
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule combine_outputs:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/11_S109/11_S109_Log.final.out, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/11_S109.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/strandedisrev/11_S109.txt.summary
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109, 11_S109.temp, 11_S109.temp1, 11_S109.temp2, 11_S109.temp3
+    jobid: 18
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/11_S109.txt
+    wildcards: sample=11_S109
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule align_reads_SAM:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/11_S109.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/11_S109/11_S109_Aligned.out.sam
+    jobid: 5
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/11_S109.trim.fastq
+    wildcards: sample=11_S109
+    resources: tmpdir=/tmp, mem_mb=40000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule align_reads_SAM:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/12_S116.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/12_S116/12_S116_Aligned.out.sam
+    jobid: 6
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/12_S116.trim.fastq
+    wildcards: sample=12_S116
+    resources: tmpdir=/tmp, mem_mb=40000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule combine_outputs:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/12_S116/12_S116_Log.final.out, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/12_S116.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/strandedisrev/12_S116.txt.summary
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/12_S116, 12_S116.temp, 12_S116.temp1, 12_S116.temp2, 12_S116.temp3
+    jobid: 19
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/12_S116.txt
+    wildcards: sample=12_S116
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule combine_outputs:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/10_S111/10_S111_Log.final.out, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/10_S111.txt, /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/featurecounts/strandedisrev/10_S111.txt.summary
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/10_S111, 10_S111.temp, 10_S111.temp1, 10_S111.temp2, 10_S111.temp3
+    jobid: 20
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/htseq/strandedisreverse/10_S111.txt
+    wildcards: sample=10_S111
+    resources: tmpdir=/tmp, mem_mb=1000
+
+
+[Wed Sep 14 13:00:46 2022]
+rule align_reads_SAM:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/10_S111.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/SAM/10_S111/10_S111_Aligned.out.sam
+    jobid: 7
+    reason: Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/10_S111.trim.fastq
+    wildcards: sample=10_S111
+    resources: tmpdir=/tmp, mem_mb=40000
+
+Would remove temporary output 11_S109.temp
+Would remove temporary output 11_S109.temp1
+Would remove temporary output 11_S109.temp2
+Would remove temporary output 11_S109.temp3
+Would remove temporary output 12_S116.temp
+Would remove temporary output 12_S116.temp1
+Would remove temporary output 12_S116.temp2
+Would remove temporary output 12_S116.temp3
+Would remove temporary output 10_S111.temp
+Would remove temporary output 10_S111.temp1
+Would remove temporary output 10_S111.temp2
+Would remove temporary output 10_S111.temp3
+
+[Wed Sep 14 13:00:46 2022]
+rule read_number:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109.summary
+    jobid: 21
+    reason: Missing output files: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109.summary; Input files updated by another job: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109
+    wildcards: sample=11_S109
+    resources: tmpdir=/tmp, mem_mb=1000
+
+Some jobs were triggered by provenance information, see 'reason' section in the rule displays above.
+If you prefer that only modification time is used to determine whether a job shall be executed, use the command line option '--rerun-triggers mtime' (also see --help).
+If you are sure that a change for a certain output file (say, <outfile>) won't change the result (e.g. because you just changed the formatting of a script or environment definition), you can also wipe its metadata to skip such a trigger via 'snakemake --cleanup-metadata <outfile>'. 
+Rules with provenance triggered jobs: combine_matrices_htseq,counting,genome_index,unzip_files
+
+RuleException in rule read_number in line 204 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
+NameError: The name 'print $1,$7,$10,$25,$32,$39,$40,$44,$45,$47,$53,$56' is unknown in this context. Please make sure that you defined that variable. Also note that braces not used for variable access have to be escaped by repeating them, i.e. {{print $1}}, when formatting the following:
+
+              awk '{print $1,$7,$10,$25,$32,$39,$40,$44,$45,$47,$53,$56}' {input} > {output}
+              

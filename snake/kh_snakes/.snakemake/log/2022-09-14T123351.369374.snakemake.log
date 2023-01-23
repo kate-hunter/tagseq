@@ -1,0 +1,38 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 14
+Job counts:
+	count	jobs
+	1	all
+	3	read_number
+	4
+
+[Wed Sep 14 12:33:52 2022]
+rule read_number:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/12_S116
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/12_S116.summary
+    jobid: 22
+    wildcards: sample=12_S116
+    resources: mem_mb=1000
+
+Submitted job 22 with external jobid 'Submitted batch job 5707268 on cluster notchpeak'.
+
+[Wed Sep 14 12:33:52 2022]
+rule read_number:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/10_S111
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/10_S111.summary
+    jobid: 23
+    wildcards: sample=10_S111
+    resources: mem_mb=1000
+
+Submitted job 23 with external jobid 'Submitted batch job 5707269 on cluster notchpeak'.
+
+[Wed Sep 14 12:33:52 2022]
+rule read_number:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/11_S109.summary
+    jobid: 21
+    wildcards: sample=11_S109
+    resources: mem_mb=1000
+
+Submitted job 21 with external jobid 'Submitted batch job 5707270 on cluster notchpeak'.

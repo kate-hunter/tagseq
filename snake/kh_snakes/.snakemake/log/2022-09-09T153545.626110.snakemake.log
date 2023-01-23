@@ -1,0 +1,80 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 14
+Job counts:
+	count	jobs
+	3	align_reads_BAM_unsorted
+	1	all
+	4
+
+[Fri Sep  9 15:35:46 2022]
+rule align_reads_BAM_unsorted:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/12_S116.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/unsorted/12_S116/12_S116_.bam
+    jobid: 9
+    wildcards: sample=12_S116
+    resources: mem_mb=40000
+
+Submitted job 9 with external jobid 'Submitted batch job 5676235 on cluster notchpeak'.
+
+[Fri Sep  9 15:35:46 2022]
+rule align_reads_BAM_unsorted:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/10_S111.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/unsorted/10_S111/10_S111_.bam
+    jobid: 10
+    wildcards: sample=10_S111
+    resources: mem_mb=40000
+
+Submitted job 10 with external jobid 'Submitted batch job 5676236 on cluster notchpeak'.
+
+[Fri Sep  9 15:35:46 2022]
+rule align_reads_BAM_unsorted:
+    input: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/11_S109.trim.fastq
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/unsorted/11_S109/11_S109_.bam
+    jobid: 8
+    wildcards: sample=11_S109
+    resources: mem_mb=40000
+
+Submitted job 8 with external jobid 'Submitted batch job 5676237 on cluster notchpeak'.
+[Fri Sep  9 15:35:56 2022]
+Error in rule align_reads_BAM_unsorted:
+    jobid: 9
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/unsorted/12_S116/12_S116_.bam
+    shell:
+        
+              module load star
+              STAR --runThreadN 12               --runMode alignReads               --genomeDir /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/indexing               --outSAMtype BAM               --outSAMunmapped Within               --readFilesIn /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/12_S116.trim.fastq               --outFileNamePrefix /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/12_S116/12_S116_              --outSAMattributes Standard
+              
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5676235 on cluster notchpeak
+
+Error executing rule align_reads_BAM_unsorted on cluster (jobid: 9, external: Submitted batch job 5676235 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.k91ax0h0/snakejob.align_reads_BAM_unsorted.9.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Fri Sep  9 15:35:56 2022]
+Error in rule align_reads_BAM_unsorted:
+    jobid: 10
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/unsorted/10_S111/10_S111_.bam
+    shell:
+        
+              module load star
+              STAR --runThreadN 12               --runMode alignReads               --genomeDir /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/indexing               --outSAMtype BAM               --outSAMunmapped Within               --readFilesIn /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/10_S111.trim.fastq               --outFileNamePrefix /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/10_S111/10_S111_              --outSAMattributes Standard
+              
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5676236 on cluster notchpeak
+
+Error executing rule align_reads_BAM_unsorted on cluster (jobid: 10, external: Submitted batch job 5676236 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.k91ax0h0/snakejob.align_reads_BAM_unsorted.10.sh). For error details see the cluster log and the log files of the involved rule(s).
+[Fri Sep  9 15:35:56 2022]
+Error in rule align_reads_BAM_unsorted:
+    jobid: 8
+    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/unsorted/11_S109/11_S109_.bam
+    shell:
+        
+              module load star
+              STAR --runThreadN 12               --runMode alignReads               --genomeDir /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/genome/indexing               --outSAMtype BAM               --outSAMunmapped Within               --readFilesIn /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/unzipped/11_S109.trim.fastq               --outFileNamePrefix /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/BAM/11_S109/11_S109_              --outSAMattributes Standard
+              
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: Submitted batch job 5676237 on cluster notchpeak
+
+Error executing rule align_reads_BAM_unsorted on cluster (jobid: 8, external: Submitted batch job 5676237 on cluster notchpeak, jobscript: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/tmp.k91ax0h0/snakejob.align_reads_BAM_unsorted.8.sh). For error details see the cluster log and the log files of the involved rule(s).
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/.snakemake/log/2022-09-09T153545.626110.snakemake.log
