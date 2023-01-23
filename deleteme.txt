@@ -1,3 +1,0 @@
-awk_scripts   example_scripts  perl_scripts  R_scripts
-bash_scripts  github_key       README	     snake
-deleteme.txt  github_key.pub   README.md     TagSeq_processing_code_anna
