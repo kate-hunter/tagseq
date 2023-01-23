@@ -1,5 +1,0 @@
-__default__:
-    cluster: notchpeak
-    partition: notchpeak-shared
-    account: kapheim
-    
