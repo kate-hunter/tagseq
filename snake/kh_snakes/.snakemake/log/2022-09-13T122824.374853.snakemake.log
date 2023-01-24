@@ -1,3 +1,0 @@
-TypeErrorin line 194 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
-temp() takes 1 positional argument but 4 were given
-  File "/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile", line 194, in <module>

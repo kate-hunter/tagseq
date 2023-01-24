@@ -1,6 +1,0 @@
-Building DAG of jobs...
-MissingInputException in rule joined_tables in line 264 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
-Missing input files for rule joined_tables:
-    output: /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/joined_long.csv
-    affected files:
-        /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_files/GSAF_files_prac/outputsfolder/joined_tables.csv

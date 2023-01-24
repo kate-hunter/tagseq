@@ -2,8 +2,6 @@
 #created 1.13.23
 #last edited 1.17.23
 
-set -e
-
 orig=$1
 outputorig=$2
 

@@ -12,13 +12,13 @@
 #    shell:"""
 #
 
-###USER INPUT####
+###USER INPUT####G
 reads_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/"
 original_files="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/original_files/"
 genome="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/genome/"
 fasta_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/genome/genome_files/NMEL_genome_v2.1.0.fasta"
 gff_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/genome/genome_files/NMEL_OGS_v2.1.0.gff3"
-plscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/kate_practice/nmel_tagseq/scripts/perl_scripts/"
+plscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/scripts/perl_scripts/"
 bashscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/scripts/bash_scripts/"
 awkscripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/scripts/awk_scripts/"
 R_scripts="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/scripts/R_scripts/"
@@ -45,7 +45,8 @@ rule all:
               reads_path+"outputsfolder/align.txt",
               reads_path+"outputsfolder/featurecounts.txt",
               reads_path+"outputsfolder/joined_tables.txt", 
-              reads_path+"outputsfolder/joined_long.txt"
+              reads_path+"outputsfolder/joined_long.txt",
+              expand(reads_path+"trimmed/"+"{sample}.summ.txt", sample=ids)
 
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for
@@ -72,16 +73,19 @@ rule combine:
 #Next steps, I do need to get the 
 rule clip:
        input: reads_path+"concatenated/"+"{sample}.cmb.fastq.gz"
-       output: reads_path+"trimmed/"+"{sample}.trim.fastq"
+       output: trim=reads_path+"trimmed/"+"{sample}.trim.fastq",
+               outtrim=reads_path+"trimmed/"+"{sample}.summ.txt"
        resources:mem_mb=lambda wildcards,  attempt: (1000*attempt)
        params:cpu=4,
               input_path=reads_path+"concatenated/",
               plscript=plscripts+"tagseq_clipper.anna.pl",
-              trim=reads_path+"trimmed/"
+              kh_pledit=plscripts+"tagseq_clipper.anna_khedited.pl",
+              outtrim=reads_path+"concatenated/"+"{sample}.summ.txt"
        shell:"""
              cd {params.input_path}
-             chmod +x {params.plscript}
-             perl {params.plscript} {input} '' 0 24 > {output}
+             chmod +x {params.kh_pledit}
+             perl {params.kh_pledit} {input} '' 0 24 > {output.trim} 
+             cp {params.outtrim} > {output.outtrim}
              """
 
 #the below rule quality filters as well as clips adaptors off, because the poly-a tail or adaptor might be there, we run through two rounds of cutadapt (this is taken from 
@@ -205,7 +209,8 @@ rule summaryoutputs:
               concat=expand(reads_path+"concatenated/"+"{sample}.cmb.fastq.gz", sample=ids),
               trim=expand(reads_path+"trimmed/"+"{sample}.trim.fastq", sample=ids),
               qual=expand(reads_path+"qual_filter/cutadapt/"+"{sample}.qualfilt", sample=ids),
-              sam=expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids)
+              sam=expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids), 
+              feats=expand(reads_path+"featurecounts/{sample}.txt.summary", sample=ids)
        output: orig=reads_path+"outputsfolder/seqcounts.txt",
                concat=reads_path+"outputsfolder/concat.txt",
                trim=reads_path+"outputsfolder/trim.txt",
@@ -271,8 +276,6 @@ rule joininginR:
              column -t {output.R_table}> {output.tall_table}
              awk -f {params.awk_script} {output.tall_table} | column -t > {output.long_table}
              """
-
-
 
 ####rules not used but kept in case they could be helpful later
 

@@ -1,6 +1,0 @@
-Building DAG of jobs...
-WorkflowError:
-MissingInputException: Missing input files for rule move_summaries:
-/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/10_S102.summary.txt
-MissingInputException: Missing input files for rule clip_5pldr_dups:
-/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/fastq_practice/concatenated/summaries/10_S102.fastq

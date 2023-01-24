@@ -1,3 +1,0 @@
-CreateRuleExceptionin line 100 of /uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile:
-The name align_reads_SAM is already used by another rule
-  File "/uufs/chpc.utah.edu/common/home/kapheim-group2/nmel_immune_tagseq/kate_practice/nmel_tagseq/scripts/snake/khprac/snakefile", line 100, in <module>

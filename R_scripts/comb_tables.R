@@ -15,9 +15,10 @@ concat<-read.table(args[2], header=TRUE, sep="")
 trim<-read.table(args[3], header=TRUE, sep="")
 qual<-read.table(args[4], header=TRUE, sep="")
 align<-read.table(args[5], header=TRUE, sep="")
+feature<-read.table(args[6], header=TRUE, sep="")
 
-dfList<-list(cmb_orig, concat, trim, qual, align)
+dfList<-list(cmb_orig, concat, trim, qual, align, feature)
 n1<-Reduce(function(x, y) merge(x, y, all=TRUE), dfList)
-write.table(n1, file=args[6], sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
+write.table(n1, file=args[7], sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
 
 
