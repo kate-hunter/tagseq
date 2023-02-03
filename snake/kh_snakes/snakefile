@@ -41,7 +41,7 @@ rule all:
               reads_path+"outputsfolder/concat.txt",
               reads_path+"outputsfolder/cmb_orig.txt", 
               reads_path+"outputsfolder/trim.txt",
-              reads_path+"outputsfolder/trimm_summ.txt",
+              reads_path+"outputsfolder/trimsumms.txt",
               reads_path+"outputsfolder/qual.txt",
               reads_path+"outputsfolder/align.txt",
               reads_path+"outputsfolder/featurecounts.txt",
@@ -208,12 +208,14 @@ rule summaryoutputs:
        input: orig=expand(original_files+"{sample}_L001_R1_001.fastq.gz", sample=ids),
               concat=expand(reads_path+"concatenated/"+"{sample}.cmb.fastq.gz", sample=ids),
               trim=expand(reads_path+"trimmed/"+"{sample}.trim.fastq", sample=ids),
+              trimsumms=expand(reads_path+"trimmed/"+"{sample}.cmb.fastq.gz.summ.txt", sample=ids),
               qual=expand(reads_path+"qual_filter/cutadapt/"+"{sample}.qualfilt", sample=ids),
               sam=expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids), 
               feats=expand(reads_path+"featurecounts/{sample}.txt.summary", sample=ids)
        output: orig=reads_path+"outputsfolder/seqcounts.txt",
                concat=reads_path+"outputsfolder/concat.txt",
                trim=reads_path+"outputsfolder/trim.txt",
+               trimsumms=reads_path+"outputsfolder/trimsumms.txt",
                qual=reads_path+"outputsfolder/qual.txt",
                align=reads_path+"outputsfolder/align.txt",
                featurecounts=reads_path+"outputsfolder/featurecounts.txt"
@@ -227,12 +229,14 @@ rule summaryoutputs:
               featurecounts=reads_path+"featurecounts/",
               bashscript_tab=bashscripts+"summing_origconcatseqs.sh", 
               bashscript_nonzip=bashscripts+"summing_nonzip.sh", 
+              bashscript_trim=bashscripts+"summing_trim.sh",
               bashscript_align=bashscripts+"summing_alignment.sh", 
               bashscript_featurecounts=bashscripts+"summing_featurecounts.sh"
        shell:"""
              sh {params.bashscript_tab} {params.origfiles} originalseqs_totals {output.orig}
              sh {params.bashscript_tab} {params.concatenated} concatenated_totals {output.concat} 
              sh {params.bashscript_nonzip} {params.trimmed} trimmed_totals {output.trim} .fastq
+             sh {params.bashscript_trim} {params.trimmed} {output.trimsumms}
              sh {params.bashscript_nonzip} {params.qualfilt} qualcheck_totals {output.qual} .qualfilt
              sh {params.bashscript_align} {params.align} {output.align}
              sh {params.bashscript_featurecounts} {params.featurecounts} {output.featurecounts}
@@ -258,7 +262,8 @@ rule joininginR:
        input: first=reads_path+"outputsfolder/cmb_orig.txt",
               sec=reads_path+"outputsfolder/concat.txt",
               third=reads_path+"outputsfolder/trim.txt",
-              fourth=reads_path+"outputsfolder/qual.txt",
+              fourth=reads_path+"outputsfolder/trimsumms.txt",
+              fifth=reads_path+"outputsfolder/qual.txt",
               sectolast=reads_path+"outputsfolder/align.txt",
               last=reads_path+"outputsfolder/featurecounts.txt"
        output: R_table=reads_path+"outputsfolder/Rcombtable.txt",
@@ -272,7 +277,7 @@ rule joininginR:
               table_name="Rcombtable.txt"
        shell:"""
              cd {params.outdir}
-             Rscript {params.r_merge} {input.first} {input.sec} {input.third} {input.fourth} {input.sectolast} {input.last} {params.table_name} 
+             Rscript {params.r_merge} {input.first} {input.sec} {input.third} {input.fourth} {input.fifth} {input.sectolast} {input.last} {params.table_name} 
              column -t {output.R_table}> {output.tall_table}
              awk -f {params.awk_script} {output.tall_table} | column -t > {output.long_table}
              """

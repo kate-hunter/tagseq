@@ -2,15 +2,15 @@
 #SBATCH --partition=kapheim-shared-np
 #SBATCH --account=kapheim-np
 #SBATCH --mem=3GB
-#SBATCH --ntasks 2
+#SBATCH --ntasks 7
 
 #bash script for executing snakemake in cluster
 #important note yaml files need to have exactly four spaces to constitute an indent
 
 
 module load snakemake/6.4.1
-	snakemake -s snakefile --cluster-config cluster.yaml --jobs 2 \
-	--cluster "sbatch --ntasks=2 --time 1:00:00 --mem={resources.mem_mb} --cpus-per-task={params.cpu} -M {cluster.cluster} -A {cluster.account} -p {cluster.partition}" \
+	snakemake -s snakefile --cluster-config cluster.yaml --jobs 7 \
+	--cluster "sbatch --ntasks=7 --time 1:00:00 --mem={resources.mem_mb} --cpus-per-task={params.cpu} -M {cluster.cluster} -A {cluster.account} -p {cluster.partition}" \
 	--latency-wait 10
 
 #To run bash script, type in sbatch bash_snake.sh

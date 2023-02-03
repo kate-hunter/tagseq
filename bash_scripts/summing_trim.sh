@@ -2,19 +2,17 @@
 #created 1.9.23
 #last edited 1.9.23
 
-#this script is getting used to get the trimming read counts as they are not gzipped and 
-#have a fastq filename-they are also in a 4line per sequence count
-
-set -e
+#this script is combining the summ.txt 
+#output headers come from perl script in tagseq_clipper.anna_khedited.pl
 
 orig=$1
-header=$2
-outputorig=$3
+outputorig=$2
 
-echo "samples $header"
+echo "samples trimmtotal trimmgoods dups noheader N.in.header">$outputorig
 
-for fname in $orig/*.fastq; do
- echo "$fname `wc -l $fname | awk '{print $1 / 4}'`"
-done | sed -n 's/^\(.*\/\)*\(.*\)/\2/p' | sed -E 's/[_]...*[fastq]//g'>>$outputorig
+for fname in $orig/*.cmb.fastq.gz.summ.txt; do
+ echo "$fname `awk -F'[^0-9]*' '{print $5, $6, $7, $8, $9}' $fname | paste - - - -`"
+done | sed -n 's/^\(.*\/\)*\(.*\)/\2/p'| sed -E 's/[_]...*.cmb.fastq.gz.summ.txt//g' >>$outputorig
 
-#
+
+#| sed -E 's/[_]...*[fastq]//g'
