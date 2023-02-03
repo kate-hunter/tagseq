@@ -1,4 +1,4 @@
- #From https://wiki.chpc.utah.edu/display/~u0424091/Snakemake
+#From https://wiki.chpc.utah.edu/display/~u0424091/Snakemake
 #dry run: snakemake -n -s snakefile
 #if you are getting that all the code wants to run several times over even though you already ran it, you can use this 
 #snakemake --touch --cores
@@ -41,12 +41,12 @@ rule all:
               reads_path+"outputsfolder/concat.txt",
               reads_path+"outputsfolder/cmb_orig.txt", 
               reads_path+"outputsfolder/trim.txt",
+              reads_path+"outputsfolder/trimm_summ.txt",
               reads_path+"outputsfolder/qual.txt",
               reads_path+"outputsfolder/align.txt",
               reads_path+"outputsfolder/featurecounts.txt",
               reads_path+"outputsfolder/joined_tables.txt", 
               reads_path+"outputsfolder/joined_long.txt",
-              expand(reads_path+"trimmed/"+"{sample}.summ.txt", sample=ids)
 
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for
@@ -70,7 +70,6 @@ rule combine:
 #then for after the header-check for duplicates based on degernate header, Anna Battenhouse recommended I use 24 based on my histograms suggesting that this is long enough
 #I could also generate a histogram to show how all the files stack up but here have not done so. 
 
-#Next steps, I do need to get the 
 rule clip:
        input: reads_path+"concatenated/"+"{sample}.cmb.fastq.gz"
        output: trim=reads_path+"trimmed/"+"{sample}.trim.fastq",
@@ -80,12 +79,13 @@ rule clip:
               input_path=reads_path+"concatenated/",
               plscript=plscripts+"tagseq_clipper.anna.pl",
               kh_pledit=plscripts+"tagseq_clipper.anna_khedited.pl",
-              outtrim=reads_path+"concatenated/"+"{sample}.summ.txt"
+              outtrim=reads_path+"concatenated/"+"{sample}.cmb.fastq.gz.summ.txt",
+              trimmed=reads_path+"trimmed/"
        shell:"""
              cd {params.input_path}
              chmod +x {params.kh_pledit}
              perl {params.kh_pledit} {input} '' 0 24 > {output.trim} 
-             cp {params.outtrim} > {output.outtrim}
+             mv {params.outtrim} {params.trimmed} 
              """
 
 #the below rule quality filters as well as clips adaptors off, because the poly-a tail or adaptor might be there, we run through two rounds of cutadapt (this is taken from 
