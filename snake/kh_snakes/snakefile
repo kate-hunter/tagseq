@@ -13,8 +13,8 @@
 #
 
 ###USER INPUT####G
-reads_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/"
-original_files="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/GSAF_files_prac/original_files/"
+reads_path="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/tagseq_analysis/"
+original_files="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/analysis/tagseq_analysis/original_files/"
 genome="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/genome/"
 fasta_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/genome/genome_files/NMEL_genome_v2.1.0.fasta"
 gff_file="/uufs/chpc.utah.edu/common/home/kapheim-group2/kate_projects/nmel_tagseq/genome/genome_files/NMEL_OGS_v2.1.0.gff3"
@@ -32,21 +32,22 @@ rule all:
               expand(original_files+"{sample}_L001_R1_001.fastq.gz", sample=ids),
               expand(reads_path+"concatenated/"+"{sample}.cmb.fastq.gz", sample=ids),
               expand(reads_path+"trimmed/"+"{sample}.trim.fastq", sample=ids),
-              expand(reads_path+"qual_filter/cutadapt/"+"{sample}.qualfilt", sample=ids),
-              expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids),
-              expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
-              expand(reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam", sample=ids),
-              expand(reads_path+"featurecounts/"+"{sample}.txt", sample=ids),
-              reads_path+"outputsfolder/seqcounts.txt",
-              reads_path+"outputsfolder/concat.txt",
-              reads_path+"outputsfolder/cmb_orig.txt", 
-              reads_path+"outputsfolder/trim.txt",
-              reads_path+"outputsfolder/trimsumms.txt",
-              reads_path+"outputsfolder/qual.txt",
-              reads_path+"outputsfolder/align.txt",
-              reads_path+"outputsfolder/featurecounts.txt",
-              reads_path+"outputsfolder/joined_tables.txt", 
-              reads_path+"outputsfolder/joined_long.txt",
+              expand(reads_path+"trimmed/"+"{sample}.cmb.fastq.gz.summ.txt", sample=ids)
+        #       expand(reads_path+"qual_filter/cutadapt/"+"{sample}.qualfilt", sample=ids),
+        #       expand(reads_path+"SAM/{sample}/"+"{sample}_Aligned.out.sam", sample=ids),
+        #       expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
+        #       expand(reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam", sample=ids),
+        #       expand(reads_path+"featurecounts/"+"{sample}.txt", sample=ids),
+        #       reads_path+"outputsfolder/seqcounts.txt",
+        #       reads_path+"outputsfolder/concat.txt",
+        #       reads_path+"outputsfolder/cmb_orig.txt", 
+        #       reads_path+"outputsfolder/trim.txt",
+        #       reads_path+"outputsfolder/trimsumms.txt",
+        #       reads_path+"outputsfolder/qual.txt",
+        #       reads_path+"outputsfolder/align.txt",
+        #       reads_path+"outputsfolder/featurecounts.txt",
+        #       reads_path+"outputsfolder/joined_tables.txt", 
+        #       reads_path+"outputsfolder/joined_long.txt"
 
 # Say you have a .fastq.gz file named <sample_name>.fastq.gz for each sample
 # in the list ids. This rule will run unzip_files for

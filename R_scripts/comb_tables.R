@@ -20,6 +20,6 @@ feature<-read.table(args[7], header=TRUE, sep="")
 
 dfList<-list(cmb_orig, concat, trim, trimsumms, qual, align, feature)
 n1<-Reduce(function(x, y) merge(x, y, all=TRUE), dfList)
-write.table(n1, file=args[7], sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
+write.table(n1, file=args[8], sep="\t", row.names=FALSE, col.names=TRUE, quote=FALSE)
 
 
