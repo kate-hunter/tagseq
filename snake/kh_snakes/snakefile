@@ -38,6 +38,7 @@ rule all:
               expand(reads_path+"BAM/{sample}/"+"{sample}_Aligned.out.bam", sample=ids),
               expand(reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam", sample=ids),
               expand(reads_path+"featurecounts/"+"{sample}.txt", sample=ids),
+              reads_path+"featurecounts/output/countsmatrix.txt",
               reads_path+"outputsfolder/seqcounts.txt",
               reads_path+"outputsfolder/concat.txt",
               reads_path+"outputsfolder/cmb_orig.txt", 
@@ -203,7 +204,26 @@ rule featurecounts:
                {input.bam}
                """
 
-#Here I wanted to add a rule 
+#Here I wanted to add a rule to get the featurecounts output from everything
+rule featurecounts_countmatrix:
+        input: gff=gff_file, 
+               bam=expand(reads_path+"BAM/{sample}/sortedbycoord/{sample}namesort.bam", sample=ids)
+        output: reads_path+"featurecounts/output/countsmatrix.txt"
+        resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+        params: cpu=1
+        shell: """
+               module load subread/1.5.3
+               featureCounts \
+               -a {input.gff} \
+               -g 'ID'\
+               -s 1 \
+               -t 'gene'\
+               -O \
+               -o {output} \
+               -T 5 \
+               {input.bam}
+               """
+
 
 
 
@@ -293,24 +313,24 @@ rule joininginR:
 ####rules not used but kept in case they could be helpful later
 
 # rule counting:
-        #         input: reads_path+"BAM/{sample}/sortedbyname/{sample}namesort.bam"
-        #         output: reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt"
-        #         resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
-        #         params: cpu=1,
-        #                 gff=gff_file,
-        #                 id="{sample}",
-        #                 strands="no"
-        #         shell:"""
-        #               module load python/3.7.3
-        #               python -m HTSeq.scripts.count \
-        #               -f bam\
-        #               -m union \
-        #               -r name \
-        #               -s {params.strands}\
-        #               -t mRNA \
-        #               -i Parent \
-        #               {input} {params.gff} > {output}
-        #               """
+#                 input: reads_path+"BAM/{sample}/sortedbyname/{sample}namesort.bam"
+#                 output: reads_path+"htseq/strandedis"+strandedness+"/{sample}.txt"
+#                 resources: mem_mb=lambda wildcards,  attempt: (1000*attempt)
+#                 params: cpu=1,
+#                         gff=gff_file,
+#                         id="{sample}",
+#                         strands="no"
+#                 shell:"""
+#                       module load python/3.7.3
+#                       python -m HTSeq.scripts.count \
+#                       -f bam\
+#                       -m union \
+#                       -r name \
+#                       -s {params.strands}\
+#                       -t mRNA \
+#                       -i Parent \
+#                       {input} {params.gff} > {output}
+#                       """
 
 ####rule combine_matrices_htseq:
         #         input: reads_path+"htseq/"

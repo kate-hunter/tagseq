@@ -16,4 +16,3 @@ for fname in $orig/*/*.final.out; do
 done | sed -n 's/^\(.*\/\)*\(.*\)/\2/p'| sed -E 's/[_]...*Log.final.out//g' >> $outputorig
 
 
-#

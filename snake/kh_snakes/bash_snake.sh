@@ -10,7 +10,7 @@
 
 module load snakemake/6.4.1
 	snakemake -s snakefile --cluster-config cluster.yaml --jobs 4 \
-	--cluster "sbatch --ntasks=4 --time 2:00:00 --mem={resources.mem_mb} --cpus-per-task={params.cpu} -M {cluster.cluster} -A {cluster.account} -p {cluster.partition}" \
+	--cluster "sbatch --ntasks=4 --time 1:00:00 --mem={resources.mem_mb} --cpus-per-task={params.cpu} -M {cluster.cluster} -A {cluster.account} -p {cluster.partition}" \
 	--latency-wait 10
 
 #To run bash script, type in sbatch bash_snake.sh
