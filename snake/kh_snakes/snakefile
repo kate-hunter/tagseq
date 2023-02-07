@@ -203,6 +203,9 @@ rule featurecounts:
                {input.bam}
                """
 
+#Here I wanted to add a rule 
+
+
 
 ###### Want to make a rule where I collect the counted outputs from each step
 rule summaryoutputs:
@@ -282,6 +285,10 @@ rule joininginR:
              column -t {output.R_table}> {output.tall_table}
              awk -f {params.awk_script} {output.tall_table} | column -t > {output.long_table}
              """
+
+#Taking the counts matrix from featurecounts and adjusting/combinging now
+
+
 
 ####rules not used but kept in case they could be helpful later
 
